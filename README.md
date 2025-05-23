@@ -1,3 +1,5 @@
+### WSL npm start alternative: `/usr/bin/node ./node_modules/react-scripts/scripts/start.js`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
