@@ -20,6 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install API dependencies
+        run: |
+          cd eventp-api
+          npm install
+
       - name: Run tests
         run: npm test a
 

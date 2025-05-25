@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-//route imports
+
+const eventRoutes = require('./routes/eventRoutes.js');
+const userRoutes = require('./routes/userRoutes.js');
 
 const app = express();
 
