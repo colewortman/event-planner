@@ -1,4 +1,4 @@
-const EventDetailRepository = require('../repository/EventDetailRepository');
+const EventDetailRepository = require('../repository/EventDetailRepository.js');
 
 class EventDetailService {
 
