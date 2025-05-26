@@ -21,6 +21,7 @@ Run the following within the eventp-api directory:
 `npm install`
 `node App.js`
 
-You may have to install express and/or cors:
+You may have to install additional packages:
 `npm install express`
 `npm install cors`
+`npm install pg`

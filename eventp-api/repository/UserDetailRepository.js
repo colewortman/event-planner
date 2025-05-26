@@ -16,7 +16,7 @@ class UserDetailRepository {
     // Create a new user
     static async createUser(newUser) {
         const { user_detail_username, user_detail_password, user_detail_email } = newUser;
-        result = await pool.query(
+        const result = await pool.query(
             'INSERT INTO eventp.user_detail (user_detail_username, user_detail_password, user_detail_email) VALUES ($1, $2, $3) RETURNING *',
             [user_detail_username, user_detail_password, user_detail_email]
         );
@@ -26,7 +26,7 @@ class UserDetailRepository {
     // Update an existing user
     static async updateUser(userId, updatedUser) {
         const { user_detail_username, user_detail_password, user_detail_email } = updatedUser;
-        result = await pool.query(
+        const result = await pool.query(
             'UPDATE eventp.user_detail SET user_detail_username = $1, user_detail_password = $2, user_detail_email = $3 WHERE user_detail_id = $4 RETURNING *',
             [user_detail_username, user_detail_password, user_detail_email, userId]
         );
