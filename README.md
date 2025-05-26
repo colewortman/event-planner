@@ -14,7 +14,10 @@ If you do not have Node.js or React installed on your machine:
     `https://nodejs.org/en/download`
     `https://react.dev/learn/installation`
 
-Run the following commands in the root directory of the project:
+Navigate to `eventp-api/` directory to setup the database and API.
+There is a seperate README.md file there that explains the setup.
+
+Run the following commands in the `root` directory of the project:
     `npm install`
     `npm run build`
     `npm start`

@@ -5,6 +5,10 @@
 `npm install`
 `node App.js`
 
+You should be able to navigate the api in your browser with the different URLs
+Here are the routing files: `routes/eventRoutes.js` `routes/userRoutes.js`
+The routes are prefixed with api, so to get all events in your browser it will be `localhost:3000/api/events/`
+
 # DB Setup
 
 Install PostgreSQL and create a database with the name `eventp`

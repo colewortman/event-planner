@@ -1,3 +1,4 @@
+-- insert fake data for events to test
 INSERT INTO
     eventp.event_detail (
         event_detail_id,
@@ -36,6 +37,7 @@ VALUES (
         200
     );
 
+-- Insert fake data for users to test
 INSERT INTO
     eventp.user_detail (
         user_detail_id,
