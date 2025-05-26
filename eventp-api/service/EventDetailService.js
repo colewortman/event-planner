@@ -1,6 +1,8 @@
 const EventDetailRepository = require('../repository/EventDetailRepository');
 
 class EventDetailService {
+
+  // Get all events from the database
   static async getAllEvents(req, res) {
     console.log('Fetching all events ', req, res);
     try {
@@ -11,6 +13,7 @@ class EventDetailService {
     }
   }
 
+  // Lookup an event by its ID
   static async getEventById(req, res) {
     const eventId = req.params.id;
     try {
@@ -24,6 +27,8 @@ class EventDetailService {
       res.status(500).json({ message: 'Error retrieving event', error });
     }
   }
+
+  // Create a new event
   static async createEvent(req, res) {
     const newEvent = req.body;
     try {
@@ -33,6 +38,8 @@ class EventDetailService {
       res.status(500).json({ message: 'Error creating event', error });
     }
   }
+
+  // Update an existing event
   static async updateEvent(req, res) {
     const eventId = req.params.id;
     const updatedEvent = req.body;
@@ -47,6 +54,8 @@ class EventDetailService {
       res.status(500).json({ message: 'Error updating event', error });
     }
   }
+
+  // Delete an event
   static async deleteEvent(req, res) {
     const eventId = req.params.id;
     try {

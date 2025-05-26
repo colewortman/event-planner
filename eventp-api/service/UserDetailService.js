@@ -1,6 +1,8 @@
 const UserDetailRepository = require('../repository/UserDetailRepository');
 
 class UserDetailService {
+
+  // Get all users from the database
   static async getAllUsers(req, res) {
     console.log('Fetching all users ', req, res);
     try {
@@ -11,6 +13,7 @@ class UserDetailService {
     }
   }
 
+  // Lookup a user by their ID
   static async getUserById(req, res) {
     const userId = req.params.id;
     try {
@@ -25,6 +28,7 @@ class UserDetailService {
     }
   }
 
+  // Create a new user
   static async createUser(req, res) {
     const newUser = req.body;
     try {
@@ -35,6 +39,7 @@ class UserDetailService {
     }
   }
 
+  // Update an existing user
   static async updateUser(req, res) {
     const userId = req.params.id;
     const updatedUser = req.body;
@@ -50,6 +55,7 @@ class UserDetailService {
     }
   }
 
+  // Delete a user
   static async deleteUser(req, res) {
     const userId = req.params.id;
     try {
