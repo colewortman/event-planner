@@ -1,7 +1,10 @@
+# This script resets the database
 DROP SCHEMA eventp;
 
+-- create the schema
 CREATE SCHEMA IF NOT EXISTS eventp;
 
+-- create tables for users
 CREATE TABLE eventp.user_detail (
     user_detail_id SERIAL NOT NULL,
     user_detail_username VARCHAR(255) NOT NULL,
@@ -12,6 +15,7 @@ CREATE TABLE eventp.user_detail (
     CONSTRAINT user_detail_email_uq UNIQUE (user_detail_email)
 )
 
+-- create tables for events
 CREATE TABLE eventp.event_detail (
     event_detail_id SERIAL NOT NULL,
     event_detail_name VARCHAR(255) NOT NULL,
@@ -23,6 +27,7 @@ CREATE TABLE eventp.event_detail (
     CONSTRAINT event_detail_pk PRIMARY KEY (event_detail_id)
 )
 
+-- create tables for event-user relationships
 CREATE TABLE eventp.eventuser (
     event_detail_id SERIAL NOT NULL,
     user_detail_id SERIAL NOT NULL,
