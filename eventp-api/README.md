@@ -7,6 +7,9 @@
 
 # DB Setup
 
+Install PostgreSQL and create a database with the name `eventp`
+`https://www.postgresql.org/download/`
+
 In the resources/ directory you will need to run the following to get your db up and running:
 `db-create.sql`
 
