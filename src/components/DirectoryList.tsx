@@ -17,5 +17,6 @@ const DirectoryList: React.FC = () => {
             </ul>
         </div>
     );
-}
+};
+
 export default DirectoryList;
