@@ -1,7 +1,6 @@
--- create the schema
+-- create the database schema and tables for the eventp API
 CREATE SCHEMA IF NOT EXISTS eventp;
 
--- create tables for users
 CREATE TABLE eventp.user_detail (
     user_detail_id SERIAL NOT NULL,
     user_detail_username VARCHAR(255) NOT NULL,
@@ -10,9 +9,8 @@ CREATE TABLE eventp.user_detail (
     CONSTRAINT user_detail_pk PRIMARY KEY (user_detail_id),
     CONSTRAINT user_detail_username_uq UNIQUE (user_detail_username),
     CONSTRAINT user_detail_email_uq UNIQUE (user_detail_email)
-)
+);
 
--- create tables for events
 CREATE TABLE eventp.event_detail (
     event_detail_id SERIAL NOT NULL,
     event_detail_created_by INT NOT NULL,
@@ -24,9 +22,8 @@ CREATE TABLE eventp.event_detail (
     event_detail_capacity INT NOT NULL,
     CONSTRAINT event_detail_pk PRIMARY KEY (event_detail_id),
     CONSTRAINT created_by_fk FOREIGN KEY (event_detail_created_by) REFERENCES eventp.user_detail (user_detail_id) ON DELETE CASCADE
-)
+);
 
--- create tables for event-user relationships
 CREATE TABLE eventp.eventuser (
     event_detail_id SERIAL NOT NULL,
     user_detail_id SERIAL NOT NULL,
@@ -34,4 +31,4 @@ CREATE TABLE eventp.eventuser (
         event_detail_id,
         user_detail_id
     )
-)
+);
