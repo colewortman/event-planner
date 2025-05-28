@@ -1,6 +1,3 @@
-# This script resets the database
-DROP SCHEMA eventp;
-
 -- create the schema
 CREATE SCHEMA IF NOT EXISTS eventp;
 
