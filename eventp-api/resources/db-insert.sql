@@ -1,42 +1,3 @@
--- insert fake data for events to test
-INSERT INTO
-    eventp.event_detail (
-        event_detail_id,
-        event_detail_name,
-        event_detail_description,
-        event_detail_date,
-        event_detail_time,
-        event_detail_location,
-        event_detail_capacity
-    )
-VALUES (
-        1,
-        'Tech Conference 2023',
-        'Annual tech conference focusing on AI and ML.',
-        '2023-10-15',
-        '09:00:00',
-        'Convention Center',
-        500
-    ),
-    (
-        2,
-        'Music Festival',
-        'A weekend of music and fun with various artists.',
-        '2023-11-05',
-        '12:00:00',
-        'City Park',
-        1000
-    ),
-    (
-        3,
-        'Art Exhibition',
-        'Showcasing local artists and their works.',
-        '2023-12-01',
-        '10:00:00',
-        'Art Gallery',
-        200
-    );
-
 -- Insert fake data for users to test
 INSERT INTO
     eventp.user_detail (
@@ -62,6 +23,49 @@ VALUES (
         'alice_jones',
         'password789',
         'ajones@example.com'
+    );
+
+-- insert fake data for events to test
+INSERT INTO
+    eventp.event_detail (
+        event_detail_id,
+        event_detail_created_by,
+        event_detail_name,
+        event_detail_description,
+        event_detail_date,
+        event_detail_time,
+        event_detail_location,
+        event_detail_capacity
+    )
+VALUES (
+        1,
+        1, -- John Doe is the creator of the event
+        'Tech Conference 2023',
+        'Annual tech conference focusing on AI and ML.',
+        '2023-10-15',
+        '09:00:00',
+        'Convention Center',
+        500
+    ),
+    (
+        2,
+        2, -- Jane Smith is the creator of the event
+        'Music Festival',
+        'A weekend of music and fun with various artists.',
+        '2023-11-05',
+        '12:00:00',
+        'City Park',
+        1000
+    ),
+    (
+        3,
+        1, -- John Doe is the creator of the event
+        'Art Exhibition',
+        'Showcasing local artists and their works.',
+        '2023-12-01',
+        '10:00:00',
+        'Art Gallery',
+        200
     );
 
 INSERT INTO
