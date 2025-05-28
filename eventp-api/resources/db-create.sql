@@ -15,13 +15,15 @@ CREATE TABLE eventp.user_detail (
 -- create tables for events
 CREATE TABLE eventp.event_detail (
     event_detail_id SERIAL NOT NULL,
+    event_detail_created_by INT NOT NULL,
     event_detail_name VARCHAR(255) NOT NULL,
     event_detail_description TEXT,
     event_detail_date DATE NOT NULL,
     event_detail_time TIME NOT NULL,
     event_detail_location VARCHAR(255),
     event_detail_capacity INT NOT NULL,
-    CONSTRAINT event_detail_pk PRIMARY KEY (event_detail_id)
+    CONSTRAINT event_detail_pk PRIMARY KEY (event_detail_id),
+    CONSTRAINT created_by_fk FOREIGN KEY (event_detail_created_by) REFERENCES eventp.user_detail (user_detail_id) ON DELETE CASCADE
 )
 
 -- create tables for event-user relationships
