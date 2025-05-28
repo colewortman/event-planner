@@ -16,7 +16,7 @@ const EventDetailList: React.FC = () => {
     const handleDelete = async (id: number) => {
         deleteEventDetail(id)
             .then(() => {
-                setEventDetails(prevDetails => prevDetails.filter(event => event.id !== id));
+                setEventDetails(prevDetails => prevDetails.filter(event => event.event_detail_id !== id));
             });
     };
 
@@ -25,10 +25,10 @@ const EventDetailList: React.FC = () => {
             <h1>Event Details</h1>
             <ul>
                 {eventDetails.map(event => (
-                    <li key={event.id}>
+                    <li key={event.event_detail_id}>
                         <p>{event.event_detail_id}</p>
                         <p>{event.event_detail_name}</p>
-                        <button onClick={() => handleDelete(event.id)}>Delete</button>
+                        <button onClick={() => handleDelete(event.event_detail_id)}>Delete</button>
                     </li>
                 ))}
             </ul>

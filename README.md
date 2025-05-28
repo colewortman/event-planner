@@ -22,8 +22,6 @@ Run the following commands in the `root` directory of the project:
     `npm run build`
     `npm start`
 
-WSL npm start alternative: `/usr/bin/node ./node_modules/react-scripts/scripts/start.js`
-
 ## Contributing
 
 If you would like to contribute, please fork the repository and open a pull request to the `master` branch
