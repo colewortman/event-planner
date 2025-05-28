@@ -1,4 +1,3 @@
--- Insert fake data for users to test
 INSERT INTO
     eventp.user_detail (
         user_detail_id,
@@ -25,7 +24,6 @@ VALUES (
         'ajones@example.com'
     );
 
--- insert fake data for events to test
 INSERT INTO
     eventp.event_detail (
         event_detail_id,
