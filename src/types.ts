@@ -11,7 +11,12 @@ export interface EventDetail {
     event_detail_capacity: number;
 }
 
-// Define the UserDetail interface
+export interface UserDetail {
+    user_detail_id: number;
+    user_detail_username: string;
+    user_detail_password: string;
+    user_detail_email: string;
+}
 
 
 
