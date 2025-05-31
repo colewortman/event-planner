@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DirectoryList from "./components/DirectoryList";
 import EventDetailList from "./components/EventDetailList";
-//import UserDetailList from "./components/UserDetailList";
+import UserDetailSignUp from "./components/UserDetailSignUp";
 
 const App: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<DirectoryList />} />
         <Route path="/events" element={<EventDetailList />} />
-        {/* <Route path="/users" element={<UserDetailList />} /> */}
+        <Route path="/users" element={<UserDetailSignUp />} />
       </Routes>
     </Router>
   );
