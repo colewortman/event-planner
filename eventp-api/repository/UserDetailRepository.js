@@ -13,6 +13,12 @@ class UserDetailRepository {
         return result.rows[0];
     }
 
+    // Lookup a user by their username
+    static async getUserByUsername(username) {
+        const result = await pool.query('SELECT * FROM eventp.user_detail WHERE user_detail_username = $1', [username]);
+        return result.rows[0];
+    }
+
     // Create a new user
     static async createUser(newUser) {
         const { user_detail_username, user_detail_password, user_detail_email } = newUser;
