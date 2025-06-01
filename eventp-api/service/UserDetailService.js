@@ -28,6 +28,21 @@ class UserDetailService {
     }
   }
 
+  // Lookup a user by their username
+  static async getUserByUsername(req, res) {
+    const username = req.params.username;
+    try {
+      const user = await UserDetailRepository.getUserByUsername(username);
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: 'User not found' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving user', error });
+    }
+  }
+
   // Create a new user
   static async createUser(req, res) {
     const newUser = req.body;

@@ -1,0 +1,39 @@
+import React from "react";
+import { useState } from "react";
+import { getUserDetailByUsername } from "services/userService";
+
+const UserDetailSignIn: React.FC = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await getUserDetailByUsername(username);
+            if (response.data && response.data.user_detail_password === password) {
+                alert("Sign in successful!");
+                // Redirect or perform further actions after successful sign-in
+            }
+        } catch (error) {
+            console.error("Error signing in:", error);
+        }
+    };
+
+    return (
+        <div>
+            <h1>User Sign In</h1>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Username:</label>
+                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+    );
+};
+export default UserDetailSignIn;
