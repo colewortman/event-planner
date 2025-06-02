@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import { createUserDetail } from '../services/userService';
+import { Link, useNavigate } from 'react-router-dom'
 
 const UserDetailSignUp: React.FC = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -11,9 +13,8 @@ const UserDetailSignUp: React.FC = () => {
         e.preventDefault();
         try {
             await createUserDetail({ user_detail_username: username, user_detail_password: password, user_detail_email: email });
-            setUsername('');
-            setPassword('');
-            setEmail('');
+            alert("Sign up successful! You can now sign in.");
+            navigate('/users');
         } catch (error) {
             console.error("Error creating user detail:", error);
         }
@@ -37,6 +38,10 @@ const UserDetailSignUp: React.FC = () => {
                 </div>
                 <button type="submit">Sign Up</button>
             </form>
+            <h1>Already have an account?</h1>
+            <p>
+                <Link to="/users">Sign In</Link>
+            </p>
         </div>
     );
 };

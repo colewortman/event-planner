@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { getUserDetailByUsername } from "services/userService";
+import { Link, useNavigate } from "react-router-dom";
 
 const UserDetailSignIn: React.FC = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -12,7 +14,7 @@ const UserDetailSignIn: React.FC = () => {
             const response = await getUserDetailByUsername(username);
             if (response.data && response.data.user_detail_password === password) {
                 alert("Sign in successful!");
-                // Redirect or perform further actions after successful sign-in
+                navigate('/events');
             }
         } catch (error) {
             console.error("Error signing in:", error);
@@ -33,6 +35,10 @@ const UserDetailSignIn: React.FC = () => {
                 </div>
                 <button type="submit">Sign In</button>
             </form>
+            <h1>Don't have an account?</h1>
+            <p>
+                <Link to="/users/signup">Sign Up</Link>
+            </p>
         </div>
     );
 };
