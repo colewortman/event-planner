@@ -4,17 +4,22 @@ import DirectoryList from "./components/DirectoryList";
 import EventDetailList from "./components/EventDetailList";
 import UserDetailSignUp from "./components/UserDetailSignUp";
 import UserDetailSignIn from "./components/UserDetailSignIn";
+import UserDetailProfile from "./components/UserDetailProfile";
+import { UserProvider } from "./components/UserContext";
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<DirectoryList />} />
-        <Route path="/events" element={<EventDetailList />} />
-        <Route path="/users" element={<UserDetailSignIn />} />
-        <Route path="/users/signup" element={<UserDetailSignUp />} />
-      </Routes>
-    </Router>
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<DirectoryList />} />
+          <Route path="/events" element={<EventDetailList />} />
+          <Route path="/users" element={<UserDetailSignIn />} />
+          <Route path="/users/signup" element={<UserDetailSignUp />} />
+          <Route path="/users/profile" element={<UserDetailProfile />} />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 };
 export default App;
