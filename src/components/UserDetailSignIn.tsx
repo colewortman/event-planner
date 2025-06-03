@@ -1,26 +1,26 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import { getUserDetailByUsername } from "services/userService";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "components/UserContext";
 
 const UserDetailSignIn: React.FC = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const userContext = useContext(UserContext);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const response = await getUserDetailByUsername(username);
             if (response.data && response.data.user_detail_password === password) {
-                alert("Sign in successful!");
+                userContext.setUserId(response.data.user_detail_id);
                 navigate('/events');
             }
         } catch (error) {
             console.error("Error signing in:", error);
         }
     };
-
     return (
         <div>
             <h1>User Sign In</h1>

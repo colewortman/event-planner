@@ -26,6 +26,9 @@ const EventDetailList: React.FC = () => {
             <h1>Event Details</h1>
             <div>
                 <p>
+                    <Link to="/users/profile">Profile</Link>
+                </p>
+                <p>
                     <Link to="/users">Sign in</Link>
                 </p>
             </div>
