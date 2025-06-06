@@ -18,7 +18,10 @@ export interface UserDetail {
     user_detail_email: string;
 }
 
-
+export interface EventUser {
+    event_detail_id: number;
+    user_detail_id: number;
+}
 
 export interface DirectoryList {
 
