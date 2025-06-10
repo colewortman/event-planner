@@ -9,7 +9,6 @@ const UserDetailProfile: React.FC = () => {
     const userContext = useContext(UserContext);
     const userId = userContext.userId;
     const [events, setEvents] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
     
     const [userDetail, setUserDetail] = useState({
         user_detail_id: 0,
@@ -18,35 +17,29 @@ const UserDetailProfile: React.FC = () => {
     });
 
     useEffect(() => {
-        if (userId) {
-            getUserDetail(userId)
-                .then(response => {
-                    setUserDetail(response.data);
-                })
-                .catch(error => {
-                    console.error("Error fetching user detail:", error);
-                });
-            getEventsByUser(userId)
-                .then(async (res) => {
-                    const eventIds = res.data.map((e: any) => e.event_detail_id);
-                    // Fetch all event details in parallel
-                    const eventDetails = await Promise.all(
-                    eventIds.map((id: number) => getEventDetail(id).then(res => res.data))
-                    );
-                    setEvents(eventDetails);
-                })
-                .catch((err) => {
-                    console.error("Error fetching user's events:", err);
-                })
-                .finally(() => setLoading(false));
-        } else if (userId === null) { 
-            console.log("User ID is null, redirecting to sign in page.");
-            <Navigate to="/users" replace />; 
-        }
+        if (userId === null) return;
+        getUserDetail(userId)
+            .then(response => {
+                setUserDetail(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching user detail:", error);
+            });
+        getEventsByUser(userId)
+            .then(async (res) => {
+                const eventIds = res.data.map((e: any) => e.event_detail_id);
+                const eventDetails = await Promise.all(
+                eventIds.map((id: number) => getEventDetail(id).then(res => res.data))
+                );
+                setEvents(eventDetails);
+            })
+            .catch((err) => {
+                console.error("Error fetching user's events:", err);
+            })
     }, [userId]);
 
-    if (loading) {
-        return <div>Loading...</div>;
+    if (userId === null) {
+        return <Navigate to="/users" replace />;
     }
 
     return (
