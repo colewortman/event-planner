@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 
+// track signed-in user ID across the app
 type UserContextType = {
   userId: number | null;
   setUserId: (id: number | null) => void;
