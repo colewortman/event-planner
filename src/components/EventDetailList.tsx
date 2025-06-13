@@ -56,13 +56,16 @@ const EventDetailList: React.FC = () => {
                 <p>
                     <Link to="/users">Sign in</Link>
                 </p>
+                <p>
+                    <Link to="/events/create">Create Event</Link>
+                </p>
             </div>
             <ul>
                 {eventDetails.map(event => (
                     <li key={event.event_detail_id}>
                         <p>{event.event_detail_id}</p>
                         <p>{event.event_detail_name}</p>
-                        {userId !== null && !joinedEventIds.includes(event.event_detail_id) && (
+                        {userId !== null && userId !== event.event_detail_created_by && !joinedEventIds.includes(event.event_detail_id) && (
                             <button onClick={() => handleJoin(event.event_detail_id)}>
                                 Join
                             </button>
