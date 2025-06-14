@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createEventDetail } from "../services/eventService";
 import { EventDetail } from "../types";
 import { UserContext } from "./UserContext";
+import { createEventUser } from "services/eventuserService";
 
 const EventDetailForm: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<EventDetail>();
@@ -23,7 +24,11 @@ const EventDetailForm: React.FC = () => {
     const onSubmit = async (data: EventDetail) => {
         data.event_detail_created_by = userId;
         try {
-            await createEventDetail(data);
+            const createdEvent = await createEventDetail(data);
+            await createEventUser({
+                event_detail_id: createdEvent.data.event_detail_id,
+                user_detail_id: userId
+            });
             navigate("/events");
         } catch (error) {
             console.error("Error creating event detail:", error);
