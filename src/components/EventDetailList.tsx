@@ -3,17 +3,33 @@ import { getEventDetails, deleteEventDetail } from '../services/eventService';
 import { EventDetail } from '../types';
 import { Link } from 'react-router-dom';
 import { UserContext } from "components/UserContext";
-import { createEventUser, getEventsByUser } from 'services/eventuserService';
+import { createEventUser, getEventsByUser, getUsersByEvent } from 'services/eventuserService';
 
 
 const EventDetailList: React.FC = () => {
     const [eventDetails, setEventDetails] = useState<EventDetail[]>([]);
     const userId = React.useContext(UserContext).userId;
     const [joinedEventIds, setJoinedEventIds] = useState<number[]>([]);
+    const [eventSignups, setEventSignups] = useState<{ [eventId: number]: number }>({});
 
     useEffect(() => {
         getEventDetails().then(response => {
             setEventDetails(response.data);
+
+            Promise.all(
+                response.data.map((event: any) =>
+                    getUsersByEvent(event.event_detail_id).then(res => ({
+                        eventId: event.event_detail_id,
+                        count: res.data.length
+                    }))
+                )
+            ).then(results => {
+                const signups: { [eventId: number]: number } = {};
+                results.forEach(({ eventId, count }) => {
+                    signups[eventId] = count;
+                });
+                setEventSignups(signups);
+            });
         });
         if (userId !== null) {
             getEventsByUser(userId)
@@ -61,21 +77,29 @@ const EventDetailList: React.FC = () => {
                 </p>
             </div>
             <ul>
-                {eventDetails.map(event => (
-                    <li key={event.event_detail_id}>
-                        <p>{event.event_detail_id}</p>
-                        <p>{event.event_detail_name}</p>
-                        {userId !== null && userId !== event.event_detail_created_by && !joinedEventIds.includes(event.event_detail_id) && (
-                            <button onClick={() => handleJoin(event.event_detail_id)}>
-                                Join
-                            </button>
-                        )}
-                        {userId !== null && userId === event.event_detail_created_by && (
-                            <button onClick={() => handleDelete(event.event_detail_id)}>
-                                Delete
-                            </button>)}
-                    </li>
-                ))}
+                {eventDetails.map(event => {
+                    const isJoined = joinedEventIds.includes(event.event_detail_id);
+                    const isFull = eventSignups[event.event_detail_id] >= event.event_detail_capacity;
+
+                    return (
+                        <li key={event.event_detail_id}>
+                            <p>{event.event_detail_id}</p>
+                            <p>{event.event_detail_name}</p>
+                            {userId !== null && userId !== event.event_detail_created_by && !isJoined && !isFull && (
+                                <button onClick={() => handleJoin(event.event_detail_id)}>
+                                    Join
+                                </button>
+                            )}
+                            {userId !== null && userId === event.event_detail_created_by && (
+                                <button onClick={() => handleDelete(event.event_detail_id)}>
+                                    Delete
+                                </button>
+                            )}
+                            {isFull && <span>Event is full</span>}
+                            {isJoined && <span>Joined</span>}
+                        </li>
+                    );
+                })}
             </ul>
         </div>
     );
