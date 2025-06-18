@@ -11,6 +11,7 @@ const EventDetailList: React.FC = () => {
     const userId = React.useContext(UserContext).userId;
     const [joinedEventIds, setJoinedEventIds] = useState<number[]>([]);
     const [eventSignups, setEventSignups] = useState<{ [eventId: number]: number }>({});
+    const [sortFilter, setSortFilter] = useState<string>('date');
 
     useEffect(() => {
         getEventDetails().then(response => {
@@ -62,6 +63,19 @@ const EventDetailList: React.FC = () => {
         });
     };
 
+    const sortedEvents = [...eventDetails].sort((a, b) => {
+        if (sortFilter === "date") {
+            return new Date(a.event_detail_date).getTime() - new Date(b.event_detail_date).getTime();
+        }
+        if (sortFilter === "capacity") {
+            return b.event_detail_capacity - a.event_detail_capacity;
+        }
+        if (sortFilter === "name") {
+            return a.event_detail_name.localeCompare(b.event_detail_name);
+        }
+        return 0;
+    });
+
     return (
         <div>
             <h1>Event Details</h1>
@@ -76,11 +90,19 @@ const EventDetailList: React.FC = () => {
                     <Link to="/events/create">Create Event</Link>
                 </p>
             </div>
+            <div>
+                <label htmlFor="sortFilter">Sort by:</label>
+                <select id="sortFilter" value={sortFilter} onChange={e => setSortFilter(e.target.value)}>
+                    <option value="date">Date</option>
+                    <option value="name">Name</option>
+                    <option value="capacity">Availability</option>
+                </select>
+            </div>
             <ul>
-                {eventDetails.map(event => {
+                {sortedEvents.map(event => {
                     const isJoined = joinedEventIds.includes(event.event_detail_id);
                     const isFull = eventSignups[event.event_detail_id] >= event.event_detail_capacity;
-
+                    
                     return (
                         <li key={event.event_detail_id}>
                             <p>{event.event_detail_name}</p>
