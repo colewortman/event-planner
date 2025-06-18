@@ -83,8 +83,12 @@ const EventDetailList: React.FC = () => {
 
                     return (
                         <li key={event.event_detail_id}>
-                            <p>{event.event_detail_id}</p>
                             <p>{event.event_detail_name}</p>
+                            <p>{event.event_detail_description}</p>
+                            <p>Joined: {eventSignups[event.event_detail_id]}/{event.event_detail_capacity}</p>
+                            <p>Created by: {event.event_detail_created_by}</p>
+                            <p>Date: {new Date(event.event_detail_date).toLocaleDateString()}</p>
+                            <p>Time: {new Date(event.event_detail_time).toLocaleTimeString()}</p>
                             {userId !== null && userId !== event.event_detail_created_by && !isJoined && !isFull && (
                                 <button onClick={() => handleJoin(event.event_detail_id)}>
                                     Join
