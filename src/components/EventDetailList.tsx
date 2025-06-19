@@ -3,7 +3,7 @@ import { getEventDetails, deleteEventDetail } from '../services/eventService';
 import { EventDetail } from '../types';
 import { Link } from 'react-router-dom';
 import { UserContext } from "components/UserContext";
-import { createEventUser, getEventsByUser, getUsersByEvent } from 'services/eventuserService';
+import { createEventUser, deleteEventUser, getEventsByUser, getUsersByEvent } from 'services/eventuserService';
 
 
 const EventDetailList: React.FC = () => {
@@ -63,6 +63,15 @@ const EventDetailList: React.FC = () => {
         });
     };
 
+    const handleLeave = (id: number) => {
+        setJoinedEventIds(prevIds => prevIds.filter(eventId => eventId !== id));
+        if (userId !== null) {
+            deleteEventUser(id, userId).catch(error => {
+                console.error("Error leaving event:", error);
+            });
+        }
+    };
+
     const sortedEvents = [...eventDetails].sort((a, b) => {
         if (sortFilter === "date") {
             return new Date(a.event_detail_date).getTime() - new Date(b.event_detail_date).getTime();
@@ -114,6 +123,11 @@ const EventDetailList: React.FC = () => {
                             {userId !== null && userId !== event.event_detail_created_by && !isJoined && !isFull && (
                                 <button onClick={() => handleJoin(event.event_detail_id)}>
                                     Join
+                                </button>
+                            )}
+                            {userId !== null && userId !== event.event_detail_created_by && isJoined && (
+                                <button onClick={() => handleLeave(event.event_detail_id)}>
+                                    Leave
                                 </button>
                             )}
                             {userId !== null && userId === event.event_detail_created_by && (
