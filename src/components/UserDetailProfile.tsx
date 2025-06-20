@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { getUserDetail } from "services/userService";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "components/UserContext";
-import { getEventsByUser } from "services/eventuserService";
-import { getEventDetail } from "services/eventService";
+import { getEventsByUser, deleteEventUser } from "services/eventuserService";
+import { getEventDetail, deleteEventDetail } from "services/eventService";
 
 const UserDetailProfile: React.FC = () => {
     const userContext = useContext(UserContext);
@@ -42,6 +42,23 @@ const UserDetailProfile: React.FC = () => {
         return <Navigate to="/users" replace />;
     }
 
+    const handleDelete = async (id: number) => {
+        deleteEventDetail(id)
+            .then(() => {
+                setEvents(prevDetails => prevDetails.filter(event => event.event_detail_id !== id));
+            });
+    };
+
+    const handleLeave = (id: number) => {
+        if (userId !== null) {
+            deleteEventUser(id, userId).catch(error => {
+                console.error("Error leaving event:", error);
+            }).then(() => {
+                setEvents(prevEvents => prevEvents.filter(event => event.event_detail_id !== id));
+            });
+        }
+    };
+
     return (
         <div>
             <div>
@@ -58,7 +75,16 @@ const UserDetailProfile: React.FC = () => {
                         events.map(event => (
                             <li key={event.event_detail_id}>
                                 <p><strong>Event:</strong> {event.event_detail_name}</p>
-                                <p>{event.event_detail_description}</p>
+                                {userId !== null && userId !== event.event_detail_created_by && (
+                                    <button onClick={() => handleLeave(event.event_detail_id)}>
+                                        Leave
+                                    </button>
+                                )}
+                                {userId !== null && userId === event.event_detail_created_by && (
+                                    <button onClick={() => handleDelete(event.event_detail_id)}>
+                                        Delete
+                                    </button>
+                                )}
                             </li>
                         ))
                     ) : (
