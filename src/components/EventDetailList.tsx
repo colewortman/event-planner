@@ -12,6 +12,7 @@ const EventDetailList: React.FC = () => {
     const [joinedEventIds, setJoinedEventIds] = useState<number[]>([]);
     const [eventSignups, setEventSignups] = useState<{ [eventId: number]: number }>({});
     const [sortFilter, setSortFilter] = useState<string>('date');
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
     useEffect(() => {
         getEventDetails().then(response => {
@@ -85,6 +86,10 @@ const EventDetailList: React.FC = () => {
         return 0;
     });
 
+    const filteredEvents = sortedEvents.filter(event =>
+        event.event_detail_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div>
             <h1>Event Details</h1>
@@ -107,8 +112,18 @@ const EventDetailList: React.FC = () => {
                     <option value="capacity">Availability</option>
                 </select>
             </div>
+            <div>
+                <label htmlFor="searchTerm">Search:</label>
+                <input
+                    type="text"
+                    id="searchTerm"
+                    value={searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
+                    placeholder="Search events..."
+                />
+            </div>
             <ul>
-                {sortedEvents.map(event => {
+                {filteredEvents.map(event => {
                     const isJoined = joinedEventIds.includes(event.event_detail_id);
                     const isFull = eventSignups[event.event_detail_id] >= event.event_detail_capacity;
                     
