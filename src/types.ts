@@ -1,5 +1,3 @@
-import DirectoryList from "./components/DirectoryList";
-
 export interface EventDetail {
     event_detail_id: number;
     event_detail_created_by: number;
@@ -21,8 +19,4 @@ export interface UserDetail {
 export interface EventUser {
     event_detail_id: number;
     user_detail_id: number;
-}
-
-export interface DirectoryList {
-
 }

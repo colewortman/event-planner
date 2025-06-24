@@ -4,6 +4,7 @@ import { EventDetail } from '../types';
 import { Link } from 'react-router-dom';
 import { UserContext } from "components/UserContext";
 import { createEventUser, deleteEventUser, getEventsByUser, getUsersByEvent } from 'services/eventuserService';
+import styles from './EventDetailList.module.css';
 
 
 const EventDetailList: React.FC = () => {
@@ -92,8 +93,8 @@ const EventDetailList: React.FC = () => {
 
     return (
         <div>
-            <h1>Event Details</h1>
-            <div>
+            <div className={styles.banner}>
+                <h1>Event Details</h1>
                 <p>
                     <Link to="/users/profile">Profile</Link>
                 </p>
@@ -104,7 +105,7 @@ const EventDetailList: React.FC = () => {
                     <Link to="/events/create">Create Event</Link>
                 </p>
             </div>
-            <div>
+            <div className={styles.filters}>
                 <label htmlFor="sortFilter">Sort by:</label>
                 <select id="sortFilter" value={sortFilter} onChange={e => setSortFilter(e.target.value)}>
                     <option value="date">Date</option>
@@ -112,7 +113,7 @@ const EventDetailList: React.FC = () => {
                     <option value="capacity">Availability</option>
                 </select>
             </div>
-            <div>
+            <div className={styles.search}>
                 <label htmlFor="searchTerm">Search:</label>
                 <input
                     type="text"
@@ -122,13 +123,13 @@ const EventDetailList: React.FC = () => {
                     placeholder="Search events..."
                 />
             </div>
-            <ul>
+            <ul className={styles.eventList}>
                 {filteredEvents.map(event => {
                     const isJoined = joinedEventIds.includes(event.event_detail_id);
                     const isFull = eventSignups[event.event_detail_id] >= event.event_detail_capacity;
                     
                     return (
-                        <li key={event.event_detail_id}>
+                        <div key={event.event_detail_id} className={styles.eventCard}>
                             <p>{event.event_detail_name}</p>
                             <p>{event.event_detail_description}</p>
                             <p>Joined: {eventSignups[event.event_detail_id]}/{event.event_detail_capacity}</p>
@@ -152,7 +153,7 @@ const EventDetailList: React.FC = () => {
                             )}
                             {isFull && <span>Event is full</span>}
                             {isJoined && <span>Joined</span>}
-                        </li>
+                        </div>
                     );
                 })}
             </ul>
