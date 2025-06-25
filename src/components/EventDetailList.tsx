@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from "components/UserContext";
 import { createEventUser, deleteEventUser, getEventsByUser, getUsersByEvent } from 'services/eventuserService';
 import styles from './EventDetailList.module.css';
+import BlurText from './BlurText';
 
 
 const EventDetailList: React.FC = () => {
@@ -91,10 +92,21 @@ const EventDetailList: React.FC = () => {
         event.event_detail_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const handleAnimationComplete = () => {
+        console.log("Animation completed");
+    };
+
     return (
         <div>
             <div className={styles.banner}>
-                <h1>Event Details</h1>
+                <BlurText
+                    text="Events"
+                    delay={150}
+                    animateBy="letters"
+                    direction="top"
+                    onAnimationComplete={handleAnimationComplete}
+                    className="text-2xl mb-8"
+                />
                 <p>
                     <Link to="/users/profile">Profile</Link>
                 </p>
