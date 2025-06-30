@@ -6,6 +6,7 @@ import { UserContext } from "components/UserContext";
 import { createEventUser, deleteEventUser, getEventsByUser, getUsersByEvent } from 'services/eventuserService';
 import styles from './EventDetailList.module.css';
 import BlurText from './BlurText';
+import { getUserDetail } from 'services/userService';
 
 
 const EventDetailList: React.FC = () => {
@@ -15,6 +16,7 @@ const EventDetailList: React.FC = () => {
     const [eventSignups, setEventSignups] = useState<{ [eventId: number]: number }>({});
     const [sortFilter, setSortFilter] = useState<string>('date');
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [usernames, setUsernames] = useState<{ [userId: number]: string }>({});
 
     useEffect(() => {
         getEventDetails().then(response => {
@@ -34,7 +36,23 @@ const EventDetailList: React.FC = () => {
                 });
                 setEventSignups(signups);
             });
+
+            const creatorIds = Array.from(new Set(response.data.map((event: any) => event.event_detail_created_by)));
+            Promise.all(
+                creatorIds.map((id: number) =>
+                    getUserDetail(id).then(res => ({ userId: id, username: res.data.user_detail_username }))
+                )
+            ).then(results => {
+                const usernamesMap: { [userId: number]: string } = {};
+                results.forEach(({ userId, username }) => {
+                    usernamesMap[userId] = username;
+                });
+                setUsernames(usernamesMap);
+            }).catch(error => {
+                console.error("Error fetching usernames:", error);
+            });
         });
+
         if (userId !== null) {
             getEventsByUser(userId)
                 .then(response => {
@@ -145,7 +163,7 @@ const EventDetailList: React.FC = () => {
                             <p>{event.event_detail_name}</p>
                             <p>{event.event_detail_description}</p>
                             <p>Joined: {eventSignups[event.event_detail_id]}/{event.event_detail_capacity}</p>
-                            <p>Created by: {event.event_detail_created_by}</p>
+                            <p>Created by: {usernames[event.event_detail_created_by]}</p>
                             <p>Date: {new Date(event.event_detail_date).toLocaleDateString()}</p>
                             <p>Time: {new Date(event.event_detail_time).toLocaleTimeString()}</p>
                             {userId !== null && userId !== event.event_detail_created_by && !isJoined && !isFull && (
