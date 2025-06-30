@@ -6,6 +6,7 @@ import UserDetailSignIn from "./components/UserDetailSignIn";
 import UserDetailProfile from "./components/UserDetailProfile";
 import EventDetailForm from "components/EventDetailForm";
 import { UserProvider } from "./components/UserContext";
+import "./App.css";
 
 const App: React.FC = () => {
   return (

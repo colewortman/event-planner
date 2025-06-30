@@ -1,15 +1,22 @@
 .banner {
-    width: 100%;
-    background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+    position: fixed;
+    /* or use 'fixed' if you want it always visible */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: linear-gradient(90deg, #1abdd3 60%, #1abdd3 100%);
     color: #fff;
     padding: 1.5rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
-    border-radius: 0 0 12px 12px;
+    border-radius: 0;
+    /* Remove rounded corners */
     margin-bottom: 2rem;
     font-size: 2rem;
+    z-index: 100;
+    box-shadow: 0 6px 32px -6px rgb(0, 0, 0);
 }
 
 .banner p {
@@ -27,6 +34,10 @@
 
 .banner a:hover {
     color: #ffd600;
+}
+
+.mainContent {
+    padding-top: 6rem;
 }
 
 .filters,
@@ -63,9 +74,11 @@
 }
 
 .eventCard {
-    background: #fff;
+    background: linear-gradient(135deg, #2d323c 80%, #23272f 100%);
+    color: #fff;
+    border: 1px solid #10b7d4;
+    box-shadow: 0 4px 24px rgba(26, 189, 211, 0.10);
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(25, 118, 210, 0.12), 0 1.5px 4px rgba(0, 0, 0, 0.08);
     padding: 1.5rem 2rem;
     margin-bottom: 2rem;
     width: 100%;
@@ -76,7 +89,6 @@
 
 .eventCard:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 8px 24px rgba(25, 118, 210, 0.18), 0 2px 8px rgba(0, 0, 0, 0.10);
 }
 
 .eventCard p {
