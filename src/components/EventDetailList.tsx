@@ -135,58 +135,60 @@ const EventDetailList: React.FC = () => {
                     <Link to="/events/create">Create Event</Link>
                 </p>
             </div>
-            <div className={styles.filters}>
-                <label htmlFor="sortFilter">Sort by:</label>
-                <select id="sortFilter" value={sortFilter} onChange={e => setSortFilter(e.target.value)}>
-                    <option value="date">Date</option>
-                    <option value="name">Name</option>
-                    <option value="capacity">Availability</option>
-                </select>
+                <div className={styles.mainContent}>
+                <div className={styles.filters}>
+                    <label htmlFor="sortFilter">Sort by:</label>
+                    <select id="sortFilter" value={sortFilter} onChange={e => setSortFilter(e.target.value)}>
+                        <option value="date">Date</option>
+                        <option value="name">Name</option>
+                        <option value="capacity">Availability</option>
+                    </select>
+                </div>
+                <div className={styles.search}>
+                    <label htmlFor="searchTerm">Search:</label>
+                    <input
+                        type="text"
+                        id="searchTerm"
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                        placeholder="Search events..."
+                    />
+                </div>
+                <ul className={styles.eventList}>
+                    {filteredEvents.map(event => {
+                        const isJoined = joinedEventIds.includes(event.event_detail_id);
+                        const isFull = eventSignups[event.event_detail_id] >= event.event_detail_capacity;
+                        
+                        return (
+                            <div key={event.event_detail_id} className={styles.eventCard}>
+                                <p>{event.event_detail_name}</p>
+                                <p>{event.event_detail_description}</p>
+                                <p>Joined: {eventSignups[event.event_detail_id]}/{event.event_detail_capacity}</p>
+                                <p>Created by: {usernames[event.event_detail_created_by]}</p>
+                                <p>Date: {new Date(event.event_detail_date).toLocaleDateString()}</p>
+                                <p>Time: {new Date(event.event_detail_time).toLocaleTimeString()}</p>
+                                {userId !== null && userId !== event.event_detail_created_by && !isJoined && !isFull && (
+                                    <button onClick={() => handleJoin(event.event_detail_id)}>
+                                        Join
+                                    </button>
+                                )}
+                                {userId !== null && userId !== event.event_detail_created_by && isJoined && (
+                                    <button onClick={() => handleLeave(event.event_detail_id)}>
+                                        Leave
+                                    </button>
+                                )}
+                                {userId !== null && userId === event.event_detail_created_by && (
+                                    <button onClick={() => handleDelete(event.event_detail_id)}>
+                                        Delete
+                                    </button>
+                                )}
+                                {isFull && <span>Event is full</span>}
+                                {isJoined && <span>Joined</span>}
+                            </div>
+                        );
+                    })}
+                </ul>
             </div>
-            <div className={styles.search}>
-                <label htmlFor="searchTerm">Search:</label>
-                <input
-                    type="text"
-                    id="searchTerm"
-                    value={searchTerm}
-                    onChange={e => setSearchTerm(e.target.value)}
-                    placeholder="Search events..."
-                />
-            </div>
-            <ul className={styles.eventList}>
-                {filteredEvents.map(event => {
-                    const isJoined = joinedEventIds.includes(event.event_detail_id);
-                    const isFull = eventSignups[event.event_detail_id] >= event.event_detail_capacity;
-                    
-                    return (
-                        <div key={event.event_detail_id} className={styles.eventCard}>
-                            <p>{event.event_detail_name}</p>
-                            <p>{event.event_detail_description}</p>
-                            <p>Joined: {eventSignups[event.event_detail_id]}/{event.event_detail_capacity}</p>
-                            <p>Created by: {usernames[event.event_detail_created_by]}</p>
-                            <p>Date: {new Date(event.event_detail_date).toLocaleDateString()}</p>
-                            <p>Time: {new Date(event.event_detail_time).toLocaleTimeString()}</p>
-                            {userId !== null && userId !== event.event_detail_created_by && !isJoined && !isFull && (
-                                <button onClick={() => handleJoin(event.event_detail_id)}>
-                                    Join
-                                </button>
-                            )}
-                            {userId !== null && userId !== event.event_detail_created_by && isJoined && (
-                                <button onClick={() => handleLeave(event.event_detail_id)}>
-                                    Leave
-                                </button>
-                            )}
-                            {userId !== null && userId === event.event_detail_created_by && (
-                                <button onClick={() => handleDelete(event.event_detail_id)}>
-                                    Delete
-                                </button>
-                            )}
-                            {isFull && <span>Event is full</span>}
-                            {isJoined && <span>Joined</span>}
-                        </div>
-                    );
-                })}
-            </ul>
         </div>
     );
 }
