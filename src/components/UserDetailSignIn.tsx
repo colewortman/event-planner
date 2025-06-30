@@ -15,7 +15,7 @@ const UserDetailSignIn: React.FC = () => {
             const response = await getUserDetailByUsername(username);
             if (response.data && response.data.user_detail_password === password) {
                 userContext.setUserId(response.data.user_detail_id);
-                navigate('/events');
+                navigate('/');
             }
         } catch (error) {
             console.error("Error signing in:", error);

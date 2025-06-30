@@ -29,7 +29,7 @@ const EventDetailForm: React.FC = () => {
                 event_detail_id: createdEvent.data.event_detail_id,
                 user_detail_id: userId
             });
-            navigate("/events");
+            navigate("/");
         } catch (error) {
             console.error("Error creating event detail:", error);
         }

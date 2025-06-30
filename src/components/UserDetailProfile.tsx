@@ -65,7 +65,7 @@ const UserDetailProfile: React.FC = () => {
                 <h1>User Profile</h1>
                 <p><strong>Username:</strong> {userDetail.user_detail_username}</p>
                 <p><strong>Email:</strong> {userDetail.user_detail_email}</p>
-                <Link to="/events">Events</Link>
+                <Link to="/">Events</Link>
                 <Link to="/events/create">Create Event</Link>
             </div>
             <div>

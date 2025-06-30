@@ -183,7 +183,6 @@ const EventDetailList: React.FC = () => {
                                     </button>
                                 )}
                                 {isFull && <span>Event is full</span>}
-                                {isJoined && <span>Joined</span>}
                             </div>
                         );
                     })}
