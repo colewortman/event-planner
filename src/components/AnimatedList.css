@@ -1,0 +1,70 @@
+.scroll-list-container {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    /* Reduced from 800px */
+    margin: 0 auto;
+}
+
+.scroll-list {
+    max-height: 900px;
+    overflow-y: auto;
+    padding: 12px 0.5rem 0 0.5rem;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.scroll-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-list::-webkit-scrollbar-track {
+    background: #23272f;
+}
+
+.scroll-list::-webkit-scrollbar-thumb {
+    background: #1abdd3;
+    border-radius: 4px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.item {
+    background: linear-gradient(135deg, #2d323c 80%, #23272f 100%);
+    color: #fff;
+    border: 1px solid #10b7d4;
+    box-shadow: 0 4px 24px rgba(26, 189, 211, 0.10);
+    border-radius: 12px;
+    padding: 1.2rem 1.2rem;
+    margin-bottom: 1.2rem;
+    width: 100%;
+    max-width: 460px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.item:hover,
+.item.selected {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(26, 189, 211, 0.18), 0 2px 8px rgba(0, 0, 0, 0.10);
+    border-color: #1976d2;
+}
+
+.top-gradient,
+.bottom-gradient {
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}

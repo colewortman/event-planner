@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { getEventDetails, deleteEventDetail } from '../services/eventService';
 import { EventDetail } from '../types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from "components/UserContext";
 import { createEventUser, deleteEventUser, getEventsByUser, getUsersByEvent } from 'services/eventuserService';
+import { getUserDetail } from 'services/userService';
 import styles from './EventDetailList.module.css';
 import BlurText from './BlurText';
-import { getUserDetail } from 'services/userService';
+import AnimatedList from './AnimatedList';
+
 
 
 const EventDetailList: React.FC = () => {
@@ -17,6 +19,7 @@ const EventDetailList: React.FC = () => {
     const [sortFilter, setSortFilter] = useState<string>('date');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [usernames, setUsernames] = useState<{ [userId: number]: string }>({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         getEventDetails().then(response => {
@@ -114,6 +117,39 @@ const EventDetailList: React.FC = () => {
         console.log("Animation completed");
     };
 
+    const eventCardItems = filteredEvents.map(event => {
+        const isJoined = joinedEventIds.includes(event.event_detail_id);
+        const isFull = eventSignups[event.event_detail_id] >= event.event_detail_capacity;
+
+        return (
+            <div key={event.event_detail_id} className={styles.eventCard}>
+                <h2>{event.event_detail_name}</h2>
+                <p>{event.event_detail_description}</p>
+                <p>Date: {new Date(event.event_detail_date).toLocaleDateString()}</p>
+                <p>Time: {new Date(event.event_detail_time).toLocaleTimeString()}</p>
+                <p>Created by: {usernames[event.event_detail_created_by]}</p>
+                <p>Joined: {eventSignups[event.event_detail_id]}/{event.event_detail_capacity}</p>
+
+                {userId !== null && userId !== event.event_detail_created_by && !isJoined && !isFull && (
+                    <button onClick={() => handleJoin(event.event_detail_id)}>
+                        Join
+                    </button>
+                )}
+                {userId !== null && userId !== event.event_detail_created_by && isJoined && (
+                    <button onClick={() => handleLeave(event.event_detail_id)}>
+                        Leave
+                    </button>
+                )}
+                {userId !== null && userId === event.event_detail_created_by && (
+                    <button onClick={() => handleDelete(event.event_detail_id)}>
+                        Delete
+                    </button>
+                )}
+                {isFull && <span>Event is full</span>}
+            </div>
+        );
+    });
+
     return (
         <div>
             <div className={styles.banner}>
@@ -125,15 +161,36 @@ const EventDetailList: React.FC = () => {
                     onAnimationComplete={handleAnimationComplete}
                     className="text-2xl mb-8"
                 />
-                <p>
-                    <Link to="/users/profile">Profile</Link>
-                </p>
-                <p>
-                    <Link to="/users">Sign in</Link>
-                </p>
-                <p>
-                    <Link to="/events/create">Create Event</Link>
-                </p>
+                <div className='links' onClick={() => navigate("/users/profile")}>
+                    <BlurText
+                        text="Profile"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/users")}>
+                    <BlurText
+                        text="Sign In"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/events/create")}>
+                    <BlurText
+                        text="Create Event"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
             </div>
                 <div className={styles.mainContent}>
                 <div className={styles.filters}>
@@ -154,39 +211,13 @@ const EventDetailList: React.FC = () => {
                         placeholder="Search events..."
                     />
                 </div>
-                <ul className={styles.eventList}>
-                    {filteredEvents.map(event => {
-                        const isJoined = joinedEventIds.includes(event.event_detail_id);
-                        const isFull = eventSignups[event.event_detail_id] >= event.event_detail_capacity;
-                        
-                        return (
-                            <div key={event.event_detail_id} className={styles.eventCard}>
-                                <p>{event.event_detail_name}</p>
-                                <p>{event.event_detail_description}</p>
-                                <p>Joined: {eventSignups[event.event_detail_id]}/{event.event_detail_capacity}</p>
-                                <p>Created by: {usernames[event.event_detail_created_by]}</p>
-                                <p>Date: {new Date(event.event_detail_date).toLocaleDateString()}</p>
-                                <p>Time: {new Date(event.event_detail_time).toLocaleTimeString()}</p>
-                                {userId !== null && userId !== event.event_detail_created_by && !isJoined && !isFull && (
-                                    <button onClick={() => handleJoin(event.event_detail_id)}>
-                                        Join
-                                    </button>
-                                )}
-                                {userId !== null && userId !== event.event_detail_created_by && isJoined && (
-                                    <button onClick={() => handleLeave(event.event_detail_id)}>
-                                        Leave
-                                    </button>
-                                )}
-                                {userId !== null && userId === event.event_detail_created_by && (
-                                    <button onClick={() => handleDelete(event.event_detail_id)}>
-                                        Delete
-                                    </button>
-                                )}
-                                {isFull && <span>Event is full</span>}
-                            </div>
-                        );
-                    })}
-                </ul>
+                <AnimatedList
+                    items={eventCardItems}
+                    onItemSelect={(item, index) => console.log(item, index)}
+                    showGradients={true}
+                    enableArrowNavigation={true}
+                    displayScrollbar={true}
+                />
             </div>
         </div>
     );
