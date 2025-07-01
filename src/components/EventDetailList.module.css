@@ -63,39 +63,6 @@
     font-size: 1rem;
 }
 
-.eventList {
-    list-style: none;
-    padding: 0;
-    margin: 0 auto;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.eventCard {
-    background: linear-gradient(135deg, #2d323c 80%, #23272f 100%);
-    color: #fff;
-    border: 1px solid #10b7d4;
-    box-shadow: 0 4px 24px rgba(26, 189, 211, 0.10);
-    border-radius: 12px;
-    padding: 1.5rem 2rem;
-    margin-bottom: 2rem;
-    width: 100%;
-    max-width: 500px;
-    transition: transform 0.15s, box-shadow 0.15s;
-    position: relative;
-}
-
-.eventCard:hover {
-    transform: translateY(-4px) scale(1.02);
-}
-
-.eventCard p {
-    margin: 0.3rem 0;
-    font-size: 1.08rem;
-}
-
 .eventCard button {
     margin-top: 0.7rem;
     margin-right: 0.7rem;
@@ -118,7 +85,6 @@
     margin-top: 0.7rem;
     font-weight: 500;
     color: #d32f2f;
-    background: #fff3e0;
     padding: 0.2rem 0.7rem;
     border-radius: 4px;
     font-size: 1rem;
