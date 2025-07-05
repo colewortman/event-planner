@@ -153,15 +153,18 @@ const EventDetailList: React.FC = () => {
     return (
         <div>
             <div className={styles.banner}>
-                <BlurText
-                    text="Events"
-                    delay={150}
-                    animateBy="letters"
-                    direction="top"
-                    onAnimationComplete={handleAnimationComplete}
-                    className="text-2xl mb-8"
-                />
-                <div className='links' onClick={() => navigate("/users/profile")}>
+                <div className={styles.title}>
+                    <BlurText
+                        text="Event Planner"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                
+                <div className={styles.links} onClick={() => navigate("/users/profile")}>
                     <BlurText
                         text="Profile"
                         delay={150}
@@ -171,7 +174,7 @@ const EventDetailList: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className='links' onClick={() => navigate("/users")}>
+                <div className={styles.links} onClick={() => navigate("/users")}>
                     <BlurText
                         text="Sign In"
                         delay={150}
@@ -181,7 +184,7 @@ const EventDetailList: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className='links' onClick={() => navigate("/events/create")}>
+                <div className={styles.links} onClick={() => navigate("/events/create")}>
                     <BlurText
                         text="Create Event"
                         delay={150}
