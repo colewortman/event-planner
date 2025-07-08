@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { createUserDetail } from '../services/userService';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './UserDetailSign.module.css';
 import BlurText from './BlurText';
 
