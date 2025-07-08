@@ -1,6 +1,5 @@
 .banner {
     position: fixed;
-    /* or use 'fixed' if you want it always visible */
     top: 0;
     left: 0;
     width: 100vw;
@@ -12,7 +11,6 @@
     justify-content: space-between;
     box-sizing: border-box;
     border-radius: 0;
-    /* Remove rounded corners */
     margin-bottom: 2rem;
     font-size: 2rem;
     z-index: 100;
@@ -34,10 +32,6 @@
 
 .banner a:hover {
     color: #ffd600;
-}
-
-.mainContent {
-    padding-top: 6rem;
 }
 
 .filters,
@@ -88,21 +82,4 @@
     padding: 0.2rem 0.7rem;
     border-radius: 4px;
     font-size: 1rem;
-}
-
-.title {
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: #000000;
-    text-align: center;
-}
-
-.links {
-    cursor: pointer;
-    display: inline-block;
-    transition: transform 0.15s, color 0.15s;
-}
-
-.links:hover {
-    transform: scale(1.08);
 }

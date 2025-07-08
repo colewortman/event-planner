@@ -152,8 +152,8 @@ const EventDetailList: React.FC = () => {
 
     return (
         <div>
-            <div className={styles.banner}>
-                <div className={styles.title}>
+            <div className='banner'>
+                <div className='title'>
                     <BlurText
                         text="Event Planner"
                         delay={150}
@@ -164,7 +164,7 @@ const EventDetailList: React.FC = () => {
                     />
                 </div>
                 
-                <div className={styles.links} onClick={() => navigate("/users/profile")}>
+                <div className='links' onClick={() => navigate("/users/profile")}>
                     <BlurText
                         text="Profile"
                         delay={150}
@@ -174,7 +174,7 @@ const EventDetailList: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className={styles.links} onClick={() => navigate("/users")}>
+                <div className='links' onClick={() => navigate("/users")}>
                     <BlurText
                         text="Sign In"
                         delay={150}
@@ -184,7 +184,7 @@ const EventDetailList: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className={styles.links} onClick={() => navigate("/events/create")}>
+                <div className='links' onClick={() => navigate("/events/create")}>
                     <BlurText
                         text="Create Event"
                         delay={150}
@@ -195,7 +195,7 @@ const EventDetailList: React.FC = () => {
                     />
                 </div>
             </div>
-                <div className={styles.mainContent}>
+                <div className='mainContent'>
                 <div className={styles.filters}>
                     <label htmlFor="sortFilter">Sort by:</label>
                     <select id="sortFilter" value={sortFilter} onChange={e => setSortFilter(e.target.value)}>
