@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import { getUserDetailByUsername } from "services/userService";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "components/UserContext";
+import styles from "./UserDetailSign.module.css";
+import BlurText from "./BlurText";
 
 const UserDetailSignIn: React.FC = () => {
     const navigate = useNavigate();
@@ -22,24 +24,71 @@ const UserDetailSignIn: React.FC = () => {
             alert("Invalid username or password. Please try again.");
         }
     };
+
+    const handleAnimationComplete = () => {
+        // Handle any actions after the animation completes
+        console.log("Animation completed");
+    };
+
     return (
         <div>
-            <h1>User Sign In</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Username:</label>
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+            <div className='banner'>
+                <div className='title'>
+                    <BlurText
+                        text="Event Planner"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                
+                <div className='links' onClick={() => navigate("/users/profile")}>
+                    <BlurText
+                        text="Profile"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
                 </div>
-                <button type="submit">Sign In</button>
-            </form>
-            <h1>Don't have an account?</h1>
-            <p>
-                <Link to="/users/signup">Sign Up</Link>
-            </p>
+                <div className='links' onClick={() => navigate("/users/signup")}>
+                    <BlurText
+                        text="Sign Up"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/")}>
+                    <BlurText
+                        text="Events"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+            </div>
+            <div className="mainContent">
+                <div className={styles.formContainer}>
+                    <form className={styles.formBox} onSubmit={handleSubmit}>
+                        <h1 className={styles.formTitle}>User Sign In</h1>
+                        <label>Username:</label>
+                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                        
+                        <label>Password:</label>
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+
+                        <button type="submit">Sign In</button>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 };
