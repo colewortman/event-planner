@@ -1,0 +1,59 @@
+.calendarEventTitle {
+    background: #1abdd3;
+    color: #fff;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-top: 4px;
+    display: inline-block;
+    transition: background 0.18s;
+}
+
+.calendarEventTitle:hover {
+    background: #1976d2;
+}
+
+.eventModalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.eventModalCard {
+    background: #2d323c;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(26, 189, 211, 0.18);
+    padding: 2rem 2.5rem;
+    color: #fff;
+    min-width: 320px;
+    max-width: 400px;
+}
+
+.calendarPanel {
+    margin: 1rem auto 0 auto;
+    background: #23272f;
+    border-radius: 16px;
+    padding: 1rem 3rem;
+    max-width: 900px;
+    min-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calendarTitle {
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    text-align: center;
+}

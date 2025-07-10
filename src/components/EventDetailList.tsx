@@ -194,6 +194,16 @@ const EventDetailList: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
+                <div className='links' onClick={() => navigate("/users")}>
+                    <BlurText
+                        text="Sign Out"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
             </div>
                 <div className='mainContent'>
                 <div className={styles.filters}>
