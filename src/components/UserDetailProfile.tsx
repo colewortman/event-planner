@@ -1,27 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getUserDetail } from "services/userService";
-import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "components/UserContext";
 import { getEventsByUser, deleteEventUser } from "services/eventuserService";
 import { getEventDetail, deleteEventDetail } from "services/eventService";
+import ReactCalendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import styles from "./UserDetailProfile.module.css";
+import BlurText from "./BlurText";
 
 const UserDetailProfile: React.FC = () => {
     const userContext = useContext(UserContext);
     const userId = userContext.userId;
     const [events, setEvents] = useState<any[]>([]);
-    
-    const [userDetail, setUserDetail] = useState({
-        user_detail_id: 0,
-        user_detail_username: "",
-        user_detail_email: "",
-    });
+    const [selectedEvent, setSelectedEvent] = useState<any>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (userId === null) return;
         getUserDetail(userId)
-            .then(response => {
-                setUserDetail(response.data);
-            })
             .catch(error => {
                 console.error("Error fetching user detail:", error);
             });
@@ -39,7 +36,7 @@ const UserDetailProfile: React.FC = () => {
     }, [userId]);
 
     if (userId === null) {
-        return <Navigate to="/users" replace />;
+        navigate("/users");
     }
 
     const handleDelete = async (id: number) => {
@@ -59,38 +56,129 @@ const UserDetailProfile: React.FC = () => {
         }
     };
 
+
+    const eventsByDate = events.reduce((acc, event) => {
+    const dateKey = new Date(event.event_detail_date).toDateString();
+    if (!acc[dateKey]) acc[dateKey] = [];
+    acc[dateKey].push(event);
+    return acc;
+    }, {} as { [date: string]: any[] });
+
+    const handleDateClick = (date: Date) => {
+    const dateKey = date.toDateString();
+    if (eventsByDate[dateKey]) {
+        setSelectedEvent(eventsByDate[dateKey][0]);
+    }};
+
+    const handleAnimationComplete = () => {
+        console.log("Animation completed");
+    };
+
     return (
         <div>
-            <div>
-                <h1>User Profile</h1>
-                <p><strong>Username:</strong> {userDetail.user_detail_username}</p>
-                <p><strong>Email:</strong> {userDetail.user_detail_email}</p>
-                <Link to="/">Events</Link>
-                <Link to="/events/create">Create Event</Link>
+            <div className='banner'>
+                <div className='title'>
+                    <BlurText
+                        text="Event Planner"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/")}>
+                    <BlurText
+                        text="Events"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/events/create")}>
+                    <BlurText
+                        text="Create Event"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/users/edit")}>
+                    <BlurText
+                        text="Edit Profile"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/users")}>
+                    <BlurText
+                        text="Sign Out"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
             </div>
-            <div>
-                <h2>Your Events</h2>
-                <ul>
-                    {events.length > 0 ? (
-                        events.map(event => (
-                            <li key={event.event_detail_id}>
-                                <p><strong>Event:</strong> {event.event_detail_name}</p>
-                                {userId !== null && userId !== event.event_detail_created_by && (
-                                    <button onClick={() => handleLeave(event.event_detail_id)}>
-                                        Leave
-                                    </button>
-                                )}
-                                {userId !== null && userId === event.event_detail_created_by && (
-                                    <button onClick={() => handleDelete(event.event_detail_id)}>
-                                        Delete
-                                    </button>
-                                )}
-                            </li>
-                        ))
-                    ) : (
-                        <li>No events found for this user.</li>
+            <div className='mainContent'>
+                <div className={styles.calendarPanel}>
+                    <h1 className={styles.calendarTitle}>Your Events</h1>
+                    <ReactCalendar
+                    onClickDay={handleDateClick}
+                    tileContent={({ date }) => {
+                        const dateKey = date.toDateString();
+                        const dayEvents = eventsByDate[dateKey];
+                        return dayEvents ? (
+                        <div>
+                            {dayEvents.map((ev: any) => (
+                            <div
+                                key={ev.event_detail_id}
+                                className={styles.calendarEventTitle}
+                                onClick={e => {
+                                e.stopPropagation();
+                                setSelectedEvent(ev);
+                                }}
+                            >
+                                {ev.event_detail_name}
+                            </div>
+                            ))}
+                        </div>
+                        ) : null;
+                    }}
+                    />
+                    {selectedEvent && (
+                    <div className={styles.eventModalBackdrop} onClick={() => setSelectedEvent(null)}>
+                        <div className={styles.eventModalCard} onClick={e => e.stopPropagation()}>
+                        <h2>{selectedEvent.event_detail_name}</h2>
+                        <p>{selectedEvent.event_detail_description}</p>
+                        <p>
+                            <strong>Date:</strong> {new Date(selectedEvent.event_detail_date).toLocaleDateString()}
+                        </p>
+                        <p>
+                            <strong>Time:</strong> {selectedEvent.event_detail_time}
+                        </p>
+                        {userId !== null && userId !== selectedEvent.event_detail_created_by && (
+                            <button onClick={() => handleLeave(selectedEvent.event_detail_id)}>
+                                Leave
+                            </button>
+                        )}
+                        {userId !== null && userId === selectedEvent.event_detail_created_by && (
+                            <button onClick={() => handleDelete(selectedEvent.event_detail_id)}>
+                                Delete
+                            </button>
+                        )}
+                        </div>
+                    </div>
                     )}
-                </ul>
+                </div>
             </div>
         </div>
     );
