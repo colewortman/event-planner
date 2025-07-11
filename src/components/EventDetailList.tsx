@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { getEventDetails, deleteEventDetail } from '../services/eventService';
 import { EventDetail } from '../types';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +13,8 @@ import AnimatedList from './AnimatedList';
 
 const EventDetailList: React.FC = () => {
     const [eventDetails, setEventDetails] = useState<EventDetail[]>([]);
-    const userId = React.useContext(UserContext).userId;
+    const userContext = useContext(UserContext);
+    const userId = userContext.userId;
     const [joinedEventIds, setJoinedEventIds] = useState<number[]>([]);
     const [eventSignups, setEventSignups] = useState<{ [eventId: number]: number }>({});
     const [sortFilter, setSortFilter] = useState<string>('date');
@@ -117,6 +118,11 @@ const EventDetailList: React.FC = () => {
         console.log("Animation completed");
     };
 
+    const handleSignOut = () => {
+        userContext.setUserId(null);
+        navigate("/users");
+    };
+
     const eventCardItems = filteredEvents.map(event => {
         const isJoined = joinedEventIds.includes(event.event_detail_id);
         const isFull = eventSignups[event.event_detail_id] >= event.event_detail_capacity;
@@ -174,16 +180,6 @@ const EventDetailList: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className='links' onClick={() => navigate("/users")}>
-                    <BlurText
-                        text="Sign In"
-                        delay={150}
-                        animateBy="letters"
-                        direction="top"
-                        onAnimationComplete={handleAnimationComplete}
-                        className="text-2xl mb-8"
-                    />
-                </div>
                 <div className='links' onClick={() => navigate("/events/create")}>
                     <BlurText
                         text="Create Event"
@@ -194,9 +190,9 @@ const EventDetailList: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className='links' onClick={() => navigate("/users")}>
+                <div className='links' onClick={() => handleSignOut()}>
                     <BlurText
-                        text="Sign Out"
+                        text={userId === null ? "Sign In" : "Sign Out"}
                         delay={150}
                         animateBy="letters"
                         direction="top"
