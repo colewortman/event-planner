@@ -35,8 +35,14 @@ const UserDetailProfile: React.FC = () => {
             })
     }, [userId]);
 
+    useEffect(() => {
+        if (userId === null) {
+            navigate("/users");
+        }
+    }, [userId, navigate]);
+
     if (userId === null) {
-        navigate("/users");
+        return null;
     }
 
     const handleDelete = async (id: number) => {
@@ -74,12 +80,27 @@ const UserDetailProfile: React.FC = () => {
         console.log("Animation completed");
     };
 
+    const handleSignOut = () => {
+        userContext.setUserId(null);
+        navigate("/users");
+    };
+
     return (
         <div>
             <div className='banner'>
                 <div className='title'>
                     <BlurText
                         text="Event Planner"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/users/edit")}>
+                    <BlurText
+                        text="Edit Profile"
                         delay={150}
                         animateBy="letters"
                         direction="top"
@@ -107,17 +128,7 @@ const UserDetailProfile: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className='links' onClick={() => navigate("/users/edit")}>
-                    <BlurText
-                        text="Edit Profile"
-                        delay={150}
-                        animateBy="letters"
-                        direction="top"
-                        onAnimationComplete={handleAnimationComplete}
-                        className="text-2xl mb-8"
-                    />
-                </div>
-                <div className='links' onClick={() => navigate("/users")}>
+                <div className='links' onClick={() => handleSignOut()}>
                     <BlurText
                         text="Sign Out"
                         delay={150}

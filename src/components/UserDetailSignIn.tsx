@@ -10,7 +10,7 @@ const UserDetailSignIn: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const userContext = useContext(UserContext);
-
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -26,7 +26,6 @@ const UserDetailSignIn: React.FC = () => {
     };
 
     const handleAnimationComplete = () => {
-        // Handle any actions after the animation completes
         console.log("Animation completed");
     };
 
@@ -54,16 +53,6 @@ const UserDetailSignIn: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className='links' onClick={() => navigate("/users/signup")}>
-                    <BlurText
-                        text="Sign Up"
-                        delay={150}
-                        animateBy="letters"
-                        direction="top"
-                        onAnimationComplete={handleAnimationComplete}
-                        className="text-2xl mb-8"
-                    />
-                </div>
                 <div className='links' onClick={() => navigate("/")}>
                     <BlurText
                         text="Events"
@@ -74,9 +63,9 @@ const UserDetailSignIn: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className='links' onClick={() => navigate("/users")}>
+                <div className='links' onClick={() => navigate("/users/signup")}>
                     <BlurText
-                        text="Sign Out"
+                        text="Sign Up"
                         delay={150}
                         animateBy="letters"
                         direction="top"

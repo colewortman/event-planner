@@ -51,16 +51,6 @@ const UserDetailSignUp: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className='links' onClick={() => navigate("/users")}>
-                    <BlurText
-                        text="Sign In"
-                        delay={150}
-                        animateBy="letters"
-                        direction="top"
-                        onAnimationComplete={handleAnimationComplete}
-                        className="text-2xl mb-8"
-                    />
-                </div>
                 <div className='links' onClick={() => navigate("/")}>
                     <BlurText
                         text="Events"
@@ -73,7 +63,7 @@ const UserDetailSignUp: React.FC = () => {
                 </div>
                 <div className='links' onClick={() => navigate("/users")}>
                     <BlurText
-                        text="Sign Out"
+                        text="Sign In"
                         delay={150}
                         animateBy="letters"
                         direction="top"
