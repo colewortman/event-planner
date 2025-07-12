@@ -62,6 +62,10 @@ const UserDetailProfile: React.FC = () => {
         }
     };
 
+    const handleEdit = (id: number) => {
+        navigate(`/events/edit/${id}`);
+    };
+
 
     const eventsByDate = events.reduce((acc, event) => {
     const dateKey = new Date(event.event_detail_date).toDateString();
@@ -169,21 +173,33 @@ const UserDetailProfile: React.FC = () => {
                     <div className={styles.eventModalBackdrop} onClick={() => setSelectedEvent(null)}>
                         <div className={styles.eventModalCard} onClick={e => e.stopPropagation()}>
                         <h2>{selectedEvent.event_detail_name}</h2>
-                        <p>{selectedEvent.event_detail_description}</p>
-                        <p>
-                            <strong>Date:</strong> {new Date(selectedEvent.event_detail_date).toLocaleDateString()}
-                        </p>
                         <p>
                             <strong>Time:</strong> {selectedEvent.event_detail_time}
                         </p>
-                        {userId !== null && userId !== selectedEvent.event_detail_created_by && (
-                            <button onClick={() => handleLeave(selectedEvent.event_detail_id)}>
-                                Leave
-                            </button>
-                        )}
+                        <p>Description: {selectedEvent.event_detail_description}</p>
+
                         {userId !== null && userId === selectedEvent.event_detail_created_by && (
-                            <button onClick={() => handleDelete(selectedEvent.event_detail_id)}>
-                                Delete
+                            <>
+                                <button
+                                    className={`${styles.eventModalCardButton} ${styles.editButton}`}
+                                    onClick={() => handleEdit(selectedEvent.event_detail_id)}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    className={`${styles.eventModalCardButton} ${styles.deleteButton}`}
+                                    onClick={() => handleDelete(selectedEvent.event_detail_id)}
+                                >
+                                    Delete
+                                </button>
+                            </>
+                        )}
+                        {userId !== null && userId !== selectedEvent.event_detail_created_by && (
+                            <button
+                                className={`${styles.eventModalCardButton} ${styles.leaveButton}`}
+                                onClick={() => handleLeave(selectedEvent.event_detail_id)}
+                            >
+                                Leave
                             </button>
                         )}
                         </div>

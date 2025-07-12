@@ -97,6 +97,10 @@ const EventDetailList: React.FC = () => {
         }
     };
 
+    const handleEdit = (id: number) => {
+        navigate(`/events/edit/${id}`);
+    };
+
     const sortedEvents = [...eventDetails].sort((a, b) => {
         if (sortFilter === "date") {
             return new Date(a.event_detail_date).getTime() - new Date(b.event_detail_date).getTime();
@@ -137,19 +141,34 @@ const EventDetailList: React.FC = () => {
                 <p>Joined: {eventSignups[event.event_detail_id]}/{event.event_detail_capacity}</p>
 
                 {userId !== null && userId !== event.event_detail_created_by && !isJoined && !isFull && (
-                    <button onClick={() => handleJoin(event.event_detail_id)}>
+                    <button 
+                        className={`${styles.eventModalCardButton} ${styles.editButton}`}
+                        onClick={() => handleJoin(event.event_detail_id)}>
                         Join
                     </button>
                 )}
                 {userId !== null && userId !== event.event_detail_created_by && isJoined && (
-                    <button onClick={() => handleLeave(event.event_detail_id)}>
+                    <button 
+                        className={`${styles.eventModalCardButton} ${styles.leaveButton}`}
+                        onClick={() => handleLeave(event.event_detail_id)}>
                         Leave
                     </button>
                 )}
                 {userId !== null && userId === event.event_detail_created_by && (
-                    <button onClick={() => handleDelete(event.event_detail_id)}>
-                        Delete
-                    </button>
+                    <>
+                        <button
+                            className={`${styles.eventModalCardButton} ${styles.editButton}`}
+                            onClick={() => handleEdit(event.event_detail_id)}
+                        >
+                            Edit
+                        </button>
+                        <button
+                            className={`${styles.eventModalCardButton} ${styles.deleteButton}`}
+                            onClick={() => handleDelete(event.event_detail_id)}
+                        >
+                            Delete
+                        </button>
+                    </>
                 )}
                 {isFull && <span>Event is full</span>}
             </div>
