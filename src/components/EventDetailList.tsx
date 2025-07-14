@@ -124,7 +124,7 @@ const EventDetailList: React.FC = () => {
 
     const handleSignOut = () => {
         userContext.setUserId(null);
-        navigate("/users");
+        navigate("/");
     };
 
     const eventCardItems = filteredEvents.map(event => {

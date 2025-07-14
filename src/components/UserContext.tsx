@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 // track signed-in user ID across the app
 type UserContextType = {
@@ -12,7 +12,18 @@ export const UserContext = createContext<UserContextType>({
 });
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [userId, setUserId] = useState<number | null>(null);
+  const [userId, setUserId] = useState<number | null>(() => {
+    const stored = localStorage.getItem("userId");
+    return stored ? Number(stored) : null;
+  });
+
+  useEffect(() => {
+    if (userId !== null) {
+      localStorage.setItem("userId", userId.toString());
+    } else {
+      localStorage.removeItem("userId");
+    }
+  }, [userId]);
 
   return (
     <UserContext.Provider value={{ userId, setUserId }}>

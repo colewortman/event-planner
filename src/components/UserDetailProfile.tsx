@@ -86,7 +86,7 @@ const UserDetailProfile: React.FC = () => {
 
     const handleSignOut = () => {
         userContext.setUserId(null);
-        navigate("/users");
+        navigate("/");
     };
 
     return (
