@@ -209,7 +209,9 @@ const EventDetailList: React.FC = () => {
                         className="text-2xl mb-8"
                     />
                 </div>
-                <div className='links' onClick={() => handleSignOut()}>
+                <div
+                    className='links'
+                    onClick={() => userId === null ? navigate("/users") : handleSignOut()}>
                     <BlurText
                         text={userId === null ? "Sign In" : "Sign Out"}
                         delay={150}
