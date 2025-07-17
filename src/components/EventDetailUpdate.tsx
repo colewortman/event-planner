@@ -3,6 +3,7 @@ import { getEventDetail, deleteEventDetail, updateEventDetail } from '../service
 import { EventDetail } from '../types';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from "components/UserContext";
+import BlurText from './BlurText';
 
 const EventDetailUpdate: React.FC = () => {
     const user = useContext(UserContext);
@@ -53,46 +54,98 @@ const EventDetailUpdate: React.FC = () => {
         }
     };
 
+    const handleAnimationComplete = () => {
+        // Handle any actions after the animation completes
+    };
+
+    const handleSignOut = () => {
+        user.setUserId(null);
+        navigate("/");
+    };
+
     return (
         <div>
-            <h2>Update Event Detail</h2>
-            <form onSubmit={handleUpdate}>
-                <input
-                    type="text"
-                    value={eventDetail.event_detail_name}
-                    onChange={(e) => setEventDetail({ ...eventDetail, event_detail_name: e.target.value })}
-                    placeholder="Event Name"
-                />
-                <textarea
-                    value={eventDetail.event_detail_description}
-                    onChange={(e) => setEventDetail({ ...eventDetail, event_detail_description: e.target.value })}
-                    placeholder="Event Description"
-                />
-                <input
-                    type="date"
-                    value={eventDetail.event_detail_date}
-                    onChange={(e) => setEventDetail({ ...eventDetail, event_detail_date: e.target.value })}
-                />
-                <input
-                    type="time"
-                    value={eventDetail.event_detail_time}
-                    onChange={(e) => setEventDetail({ ...eventDetail, event_detail_time: e.target.value })}
-                />
-                <input
-                    type="text"
-                    value={eventDetail.event_detail_location}
-                    onChange={(e) => setEventDetail({ ...eventDetail, event_detail_location: e.target.value })}
-                    placeholder="Event Location"
-                />
-                <input
-                    type="number"
-                    value={eventDetail.event_detail_capacity}
-                    onChange={(e) => setEventDetail({ ...eventDetail, event_detail_capacity: parseInt(e.target.value) })}
-                    placeholder="Event Capacity"
-                />
-                <button type="submit">Update Event</button>
-            </form>
-            <button onClick={handleDelete}>Delete Event</button>
+            <div className='banner'>
+                <div className='title'>
+                    <BlurText
+                        text="Create Event"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/")}>
+                    <BlurText
+                        text="Events"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => navigate("/users/profile")}>
+                    <BlurText
+                        text="Profile"
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+                <div className='links' onClick={() => handleSignOut()}>
+                    <BlurText
+                        text={userId === null ? "Sign In" : "Sign Out"}
+                        delay={150}
+                        animateBy="letters"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-2xl mb-8"
+                    />
+                </div>
+            </div>
+            <div className="mainContent">
+                <form onSubmit={handleUpdate}>
+                    <input
+                        type="text"
+                        value={eventDetail.event_detail_name}
+                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_name: e.target.value })}
+                        placeholder="Event Name"
+                    />
+                    <textarea
+                        value={eventDetail.event_detail_description}
+                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_description: e.target.value })}
+                        placeholder="Event Description"
+                    />
+                    <input
+                        type="date"
+                        value={eventDetail.event_detail_date}
+                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_date: e.target.value })}
+                    />
+                    <input
+                        type="time"
+                        value={eventDetail.event_detail_time}
+                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_time: e.target.value })}
+                    />
+                    <input
+                        type="text"
+                        value={eventDetail.event_detail_location}
+                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_location: e.target.value })}
+                        placeholder="Event Location"
+                    />
+                    <input
+                        type="number"
+                        value={eventDetail.event_detail_capacity}
+                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_capacity: parseInt(e.target.value) })}
+                        placeholder="Event Capacity"
+                    />
+                    <button type="submit">Update Event</button>
+                </form>
+                <button onClick={handleDelete}>Delete Event</button>
+            </div>
         </div>
     );
 };
