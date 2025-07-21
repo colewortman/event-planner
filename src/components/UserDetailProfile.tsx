@@ -46,10 +46,14 @@ const UserDetailProfile: React.FC = () => {
     }
 
     const handleDelete = async (id: number) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this event?");
+        if (!confirmDelete) return;
+
         deleteEventDetail(id)
             .then(() => {
                 setEvents(prevDetails => prevDetails.filter(event => event.event_detail_id !== id));
             });
+        setSelectedEvent(null)
     };
 
     const handleLeave = (id: number) => {
@@ -60,6 +64,7 @@ const UserDetailProfile: React.FC = () => {
                 setEvents(prevEvents => prevEvents.filter(event => event.event_detail_id !== id));
             });
         }
+        setSelectedEvent(null)
     };
 
     const handleEdit = (id: number) => {
@@ -87,6 +92,7 @@ const UserDetailProfile: React.FC = () => {
     const handleSignOut = () => {
         userContext.setUserId(null);
         navigate("/");
+        alert("You have signed out successfully!");
     };
 
     return (
@@ -173,9 +179,11 @@ const UserDetailProfile: React.FC = () => {
                     <div className={styles.eventModalBackdrop} onClick={() => setSelectedEvent(null)}>
                         <div className={styles.eventModalCard} onClick={e => e.stopPropagation()}>
                         <h2>{selectedEvent.event_detail_name}</h2>
-                        <p>
-                            <strong>Time:</strong> {selectedEvent.event_detail_time}
-                        </p>
+                        <p>Time: {new Date(`1970-01-01T${selectedEvent.event_detail_time}`).toLocaleTimeString([], {
+                            hour: 'numeric',
+                            minute: '2-digit',
+                            hour12: true,
+                        })}</p>
                         <p>Description: {selectedEvent.event_detail_description}</p>
 
                         {userId !== null && userId === selectedEvent.event_detail_created_by && (

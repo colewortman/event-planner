@@ -35,6 +35,7 @@ const EventDetailUpdate: React.FC = () => {
             updateEventDetail(eventId, eventDetail)
                 .then(() => {
                     navigate("/"); // or your desired page
+                    alert("Event updated successfully!");
                 })
                 .catch(error => {
                     console.error("Error updating event detail:", error);
@@ -43,6 +44,9 @@ const EventDetailUpdate: React.FC = () => {
     };
 
     const handleDelete = () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this event?");
+        if (!confirmDelete) return;
+
         if (eventId !== null && !isNaN(eventId)) {
             deleteEventDetail(eventId)
                 .then(() => {
@@ -61,6 +65,7 @@ const EventDetailUpdate: React.FC = () => {
     const handleSignOut = () => {
         user.setUserId(null);
         navigate("/");
+        alert("You have signed out successfully!");
     };
 
     return (
@@ -124,6 +129,7 @@ const EventDetailUpdate: React.FC = () => {
                         type="date"
                         value={eventDetail.event_detail_date}
                         onChange={(e) => setEventDetail({ ...eventDetail, event_detail_date: e.target.value })}
+                        min={new Date().toISOString().split("T")[0]}
                     />
                     <input
                         type="time"
