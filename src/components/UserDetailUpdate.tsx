@@ -33,12 +33,14 @@ const UserDetailUpdate: React.FC = () => {
     const handleUpdate = (e: React.FormEvent) => {
         e.preventDefault();
         updateUserDetail(userId, userDetail)
+        alert("Profile updated successfully!");
         navigate("/users/profile");
     };
 
     const handleSignOut = () => {
         userContext.setUserId(null);
         navigate("/users");
+        alert("You have signed out successfully!");
     };
 
     const handleAnimationComplete = () => {

@@ -31,6 +31,7 @@ const EventDetailForm: React.FC = () => {
                 event_detail_id: createdEvent.data.event_detail_id,
                 user_detail_id: userId
             });
+            alert("Event created successfully!");
             navigate("/");
         } catch (error) {
             console.error("Error creating event detail:", error);
@@ -40,6 +41,7 @@ const EventDetailForm: React.FC = () => {
     const handleSignOut = () => {
         user.setUserId(null);
         navigate("/");
+        alert("You have signed out successfully!");
     };
 
     const handleAnimationComplete = () => {
@@ -105,7 +107,8 @@ const EventDetailForm: React.FC = () => {
                     </div>
                     <div>
                         <label>Date</label>
-                        <input type="date" {...register("event_detail_date", { required: "Date is required" })} />
+                        <input type="date" {...register("event_detail_date", { required: "Date is required" })}
+                        min={new Date().toISOString().split("T")[0]} />
                         {errors.event_detail_date && <span>{errors.event_detail_date.message}</span>}
                     </div>
                     <div>

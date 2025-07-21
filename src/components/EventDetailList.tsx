@@ -71,6 +71,9 @@ const EventDetailList: React.FC = () => {
     }, [userId]);
 
     const handleDelete = async (id: number) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this event?");
+        if (!confirmDelete) return;
+
         deleteEventDetail(id)
             .then(() => {
                 setEventDetails(prevDetails => prevDetails.filter(event => event.event_detail_id !== id));
@@ -125,6 +128,7 @@ const EventDetailList: React.FC = () => {
     const handleSignOut = () => {
         userContext.setUserId(null);
         navigate("/");
+        alert("You have signed out successfully!");
     };
 
     const eventCardItems = filteredEvents.map(event => {
@@ -136,7 +140,11 @@ const EventDetailList: React.FC = () => {
                 <h2>{event.event_detail_name}</h2>
                 <p>{event.event_detail_description}</p>
                 <p>Date: {new Date(event.event_detail_date).toLocaleDateString()}</p>
-                <p>Time: {new Date(event.event_detail_time).toLocaleTimeString()}</p>
+                <p>Time: {new Date(`1970-01-01T${event.event_detail_time}`).toLocaleTimeString([], {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true,
+                })}</p>
                 <p>Created by: {usernames[event.event_detail_created_by]}</p>
                 <p>Joined: {eventSignups[event.event_detail_id]}/{event.event_detail_capacity}</p>
 
