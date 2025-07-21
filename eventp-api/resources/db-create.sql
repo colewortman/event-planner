@@ -2,7 +2,7 @@
 CREATE SCHEMA IF NOT EXISTS eventp;
 
 CREATE TABLE eventp.user_detail (
-    user_detail_id INT NOT NULL,
+    user_detail_id SERIAL NOT NULL,
     user_detail_username VARCHAR(255) NOT NULL,
     user_detail_password VARCHAR(255) NOT NULL,
     user_detail_email VARCHAR(255) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE eventp.user_detail (
 );
 
 CREATE TABLE eventp.event_detail (
-    event_detail_id INT NOT NULL,
+    event_detail_id SERIAL NOT NULL,
     event_detail_created_by INT NOT NULL,
     event_detail_name VARCHAR(255) NOT NULL,
     event_detail_description TEXT,
@@ -27,8 +27,8 @@ CREATE TABLE eventp.event_detail (
 );
 
 CREATE TABLE eventp.eventuser (
-    event_detail_id INT NOT NULL,
-    user_detail_id INT NOT NULL,
+    event_detail_id SERIAL NOT NULL,
+    user_detail_id SERIAL NOT NULL,
     CONSTRAINT pk_eventuser PRIMARY KEY (
         event_detail_id,
         user_detail_id
