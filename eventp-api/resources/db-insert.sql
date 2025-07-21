@@ -40,7 +40,7 @@ VALUES (
         1, -- John Doe is the creator of the event
         'Tech Conference 2023',
         'Annual tech conference focusing on AI and ML.',
-        '2023-10-15',
+        '2025-10-15',
         '09:00:00',
         'Convention Center',
         500
@@ -50,7 +50,7 @@ VALUES (
         2, -- Jane Smith is the creator of the event
         'Music Festival',
         'A weekend of music and fun with various artists.',
-        '2023-11-05',
+        '2025-11-05',
         '12:00:00',
         'City Park',
         1000
@@ -60,7 +60,7 @@ VALUES (
         1, -- John Doe is the creator of the event
         'Art Exhibition',
         'Showcasing local artists and their works.',
-        '2023-12-01',
+        '2025-12-01',
         '10:00:00',
         'Art Gallery',
         200
