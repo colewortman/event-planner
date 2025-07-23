@@ -6,6 +6,7 @@ import { EventDetail } from "../types";
 import { UserContext } from "./UserContext";
 import { createEventUser } from "services/eventuserService";
 import BlurText from "./BlurText";
+import styles from "./EventDetailForm.module.css";
 
 const EventDetailForm: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<EventDetail>();
@@ -94,40 +95,43 @@ const EventDetailForm: React.FC = () => {
                 </div>
             </div>
             <div className="mainContent">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div>
-                        <label>Title</label>
-                        <input {...register("event_detail_name", { required: "Title is required" })} />
-                        {errors.event_detail_name && <span>{errors.event_detail_name.message}</span>}
-                    </div>
-                    <div>
-                        <label>Description</label>
-                        <textarea {...register("event_detail_description", { required: "Description is required" })} />
-                        {errors.event_detail_description && <span>{errors.event_detail_description.message}</span>}
-                    </div>
-                    <div>
-                        <label>Date</label>
-                        <input type="date" {...register("event_detail_date", { required: "Date is required" })}
-                        min={new Date().toISOString().split("T")[0]} />
-                        {errors.event_detail_date && <span>{errors.event_detail_date.message}</span>}
-                    </div>
-                    <div>
-                        <label>Time</label>
-                        <input type="time" {...register("event_detail_time", { required: "Time is required" })} />
-                        {errors.event_detail_time && <span>{errors.event_detail_time.message}</span>}
-                    </div>
-                    <div>
-                        <label>Location</label>
-                        <input {...register("event_detail_location", { required: "Location is required" })} />
-                        {errors.event_detail_location && <span>{errors.event_detail_location.message}</span>}
-                    </div>
-                    <div>
-                        <label>Max Participants</label>
-                        <input type="number" {...register("event_detail_capacity", { required: "Max participants is required", min: 1 })} />
-                        {errors.event_detail_capacity && <span>{errors.event_detail_capacity.message}</span>}
-                    </div>
-                    <button type="submit">Create Event</button>
-                </form>
+                <div className={styles.formContainer}>
+                    <form className={styles.formBox} onSubmit={handleSubmit(onSubmit)}>
+                        <h1 className={styles.formTitle}>User Sign Up</h1>
+                        <div>
+                            <label>Title</label>
+                            <input {...register("event_detail_name", { required: "Title is required" })} />
+                            {errors.event_detail_name && <span>{errors.event_detail_name.message}</span>}
+                        </div>
+                        <div>
+                            <label>Description</label>
+                            <textarea {...register("event_detail_description", { required: "Description is required" })} />
+                            {errors.event_detail_description && <span>{errors.event_detail_description.message}</span>}
+                        </div>
+                        <div>
+                            <label>Date</label>
+                            <input type="date" {...register("event_detail_date", { required: "Date is required" })}
+                            min={new Date().toISOString().split("T")[0]} />
+                            {errors.event_detail_date && <span>{errors.event_detail_date.message}</span>}
+                        </div>
+                        <div>
+                            <label>Time</label>
+                            <input type="time" {...register("event_detail_time", { required: "Time is required" })} />
+                            {errors.event_detail_time && <span>{errors.event_detail_time.message}</span>}
+                        </div>
+                        <div>
+                            <label>Location</label>
+                            <input {...register("event_detail_location", { required: "Location is required" })} />
+                            {errors.event_detail_location && <span>{errors.event_detail_location.message}</span>}
+                        </div>
+                        <div>
+                            <label>Max Participants</label>
+                            <input type="number" {...register("event_detail_capacity", { required: "Max participants is required", min: 1 })} />
+                            {errors.event_detail_capacity && <span>{errors.event_detail_capacity.message}</span>}
+                        </div>
+                        <button type="submit">Create Event</button>
+                    </form>
+                </div>
             </div>
         </div>
     );
