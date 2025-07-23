@@ -97,6 +97,7 @@ const EventDetailForm: React.FC = () => {
             <div className="mainContent">
                 <div className={styles.formContainer}>
                     <form className={styles.formBox} onSubmit={handleSubmit(onSubmit)}>
+                        <h1 className={styles.formTitle}>User Sign Up</h1>
                         <div>
                             <label>Title</label>
                             <input {...register("event_detail_name", { required: "Title is required" })} />

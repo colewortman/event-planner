@@ -19,6 +19,14 @@
     flex-direction: column;
 }
 
+.formTitle {
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
 .formBox h2 {
     color: #1abdd3;
     font-size: 2rem;
