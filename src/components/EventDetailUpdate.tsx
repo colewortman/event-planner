@@ -4,6 +4,7 @@ import { EventDetail } from '../types';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserContext } from "components/UserContext";
 import BlurText from './BlurText';
+import styles from './EventDetailForm.module.css';
 
 const EventDetailUpdate: React.FC = () => {
     const user = useContext(UserContext);
@@ -73,7 +74,7 @@ const EventDetailUpdate: React.FC = () => {
             <div className='banner'>
                 <div className='title'>
                     <BlurText
-                        text="Create Event"
+                        text="Edit Event"
                         delay={150}
                         animateBy="letters"
                         direction="top"
@@ -113,44 +114,47 @@ const EventDetailUpdate: React.FC = () => {
                 </div>
             </div>
             <div className="mainContent">
-                <form onSubmit={handleUpdate}>
-                    <input
-                        type="text"
-                        value={eventDetail.event_detail_name}
-                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_name: e.target.value })}
-                        placeholder="Event Name"
-                    />
-                    <textarea
-                        value={eventDetail.event_detail_description}
-                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_description: e.target.value })}
-                        placeholder="Event Description"
-                    />
-                    <input
-                        type="date"
-                        value={eventDetail.event_detail_date}
-                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_date: e.target.value })}
-                        min={new Date().toISOString().split("T")[0]}
-                    />
-                    <input
-                        type="time"
-                        value={eventDetail.event_detail_time}
-                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_time: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        value={eventDetail.event_detail_location}
-                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_location: e.target.value })}
-                        placeholder="Event Location"
-                    />
-                    <input
-                        type="number"
-                        value={eventDetail.event_detail_capacity}
-                        onChange={(e) => setEventDetail({ ...eventDetail, event_detail_capacity: parseInt(e.target.value) })}
-                        placeholder="Event Capacity"
-                    />
-                    <button type="submit">Update Event</button>
-                </form>
-                <button onClick={handleDelete}>Delete Event</button>
+                <div className={styles.formContainer}>
+                    <form className={styles.formBox} onSubmit={handleUpdate}>
+                        <h1 className={styles.formTitle}>Edit Event</h1>
+                        <input
+                            type="text"
+                            value={eventDetail.event_detail_name}
+                            onChange={(e) => setEventDetail({ ...eventDetail, event_detail_name: e.target.value })}
+                            placeholder="Event Name"
+                        />
+                        <textarea
+                            value={eventDetail.event_detail_description}
+                            onChange={(e) => setEventDetail({ ...eventDetail, event_detail_description: e.target.value })}
+                            placeholder="Event Description"
+                        />
+                        <input
+                            type="date"
+                            value={eventDetail.event_detail_date}
+                            onChange={(e) => setEventDetail({ ...eventDetail, event_detail_date: e.target.value })}
+                            min={new Date().toISOString().split("T")[0]}
+                        />
+                        <input
+                            type="time"
+                            value={eventDetail.event_detail_time}
+                            onChange={(e) => setEventDetail({ ...eventDetail, event_detail_time: e.target.value })}
+                        />
+                        <input
+                            type="text"
+                            value={eventDetail.event_detail_location}
+                            onChange={(e) => setEventDetail({ ...eventDetail, event_detail_location: e.target.value })}
+                            placeholder="Event Location"
+                        />
+                        <input
+                            type="number"
+                            value={eventDetail.event_detail_capacity}
+                            onChange={(e) => setEventDetail({ ...eventDetail, event_detail_capacity: parseInt(e.target.value) })}
+                            placeholder="Event Capacity"
+                        />
+                        <button className={styles.submitButton} type="submit">Update Event</button>
+                        <button className={styles.deleteEventButton} onClick={handleDelete}>Delete Event</button>
+                    </form>
+                </div>
             </div>
         </div>
     );

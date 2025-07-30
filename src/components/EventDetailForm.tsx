@@ -129,7 +129,7 @@ const EventDetailForm: React.FC = () => {
                             <input type="number" {...register("event_detail_capacity", { required: "Max participants is required", min: 1 })} />
                             {errors.event_detail_capacity && <span>{errors.event_detail_capacity.message}</span>}
                         </div>
-                        <button type="submit">Create Event</button>
+                        <button className={styles.submitButton} type="submit">Create Event</button>
                     </form>
                 </div>
             </div>

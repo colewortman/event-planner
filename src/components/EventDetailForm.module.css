@@ -98,12 +98,12 @@
 
 
 
-.formBox button {
+.submitButton {
     width: 100%;
     padding: 0.7rem 0;
     border: none;
     border-radius: 6px;
-    background: #1abdd3;
+    background: #1976d2;
     color: #fff;
     font-size: 1.1rem;
     font-weight: 600;
@@ -112,6 +112,24 @@
     transition: background 0.18s;
 }
 
-.formBox button:hover {
-    background: #1976d2;
+.submitButton:hover {
+    background: #1565c0;
+}
+
+.deleteEventButton {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0.7rem 0;
+    border: none;
+    border-radius: 6px;
+    background: #d32f2f;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s;
+}
+
+.deleteEventButton:hover {
+    background: #b71c1c;
 }
