@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "components/UserContext";
 import { updateUserDetail } from "services/userService";
 import BlurText from "./BlurText";
+import styles from "./UserDetailSign.module.css";
 
 const UserDetailUpdate: React.FC = () => {
     const userContext = useContext(UserContext);
@@ -92,34 +93,30 @@ const UserDetailUpdate: React.FC = () => {
                 </div>
             </div>
             <div className="mainContent">
-                <h1>User Profile Update</h1>
-                <form onSubmit={handleUpdate}>
-                    <div>
-                        <label>Username:</label>
-                        <input
-                            type="text"
-                            value={userDetail.user_detail_username}
-                            onChange={(e) => setUserDetail({ ...userDetail, user_detail_username: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            value={userDetail.user_detail_email}
-                            onChange={(e) => setUserDetail({ ...userDetail, user_detail_email: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label>Password:</label>
-                        <input
-                            type="password"
-                            value={userDetail.user_detail_password}
-                            onChange={(e) => setUserDetail({ ...userDetail, user_detail_password: e.target.value })}
-                        />
-                    </div>
-                    <button type="submit">Update Profile</button>
-                </form>
+                <div className={styles.formContainer}>
+                    <form className={styles.formBox} onSubmit={handleUpdate}>
+                        <h1>User Profile Update</h1>
+                            <label>Username:</label>
+                            <input
+                                type="text"
+                                value={userDetail.user_detail_username}
+                                onChange={(e) => setUserDetail({ ...userDetail, user_detail_username: e.target.value })}
+                            />
+                            <label>Email:</label>
+                            <input
+                                type="email"
+                                value={userDetail.user_detail_email}
+                                onChange={(e) => setUserDetail({ ...userDetail, user_detail_email: e.target.value })}
+                            />
+                            <label>Password:</label>
+                            <input
+                                type="password"
+                                value={userDetail.user_detail_password}
+                                onChange={(e) => setUserDetail({ ...userDetail, user_detail_password: e.target.value })}
+                            />
+                        <button type="submit">Update Profile</button>
+                    </form>
+                </div>
             </div>
         </div>
     );
