@@ -1,7 +1,7 @@
 import axios from "axios";
 import { EventUser } from "../types";
 
-const API_URL = "http://localhost:3000/api/";
+const API_URL = "http://localhost:5000/api/";
 
 export const getUsersByEvent = (eventId: number) => axios.get<EventUser[]>(`${API_URL}event/${eventId}`);
 export const getEventsByUser = (userId: number) => axios.get<EventUser[]>(`${API_URL}user/${userId}`);

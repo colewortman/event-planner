@@ -1,7 +1,7 @@
 import axios from "axios";
 import { EventDetail } from "../types";
 
-const API_URL = "http://localhost:3000/api/events";
+const API_URL = "http://localhost:5000/api/events";
 
 export const getEventDetails = () => axios.get<EventDetail[]>(API_URL);
 export const getEventDetail = (id: number) => axios.get<EventDetail>(`${API_URL}/${id}`);

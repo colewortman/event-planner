@@ -1,7 +1,7 @@
 import axios from "axios";
 import { UserDetail } from "../types";
 
-const API_URL = "http://localhost:3000/api/users";
+const API_URL = "http://localhost:5000/api/users";
 
 export const getUserDetail = (id: number) => axios.get<UserDetail>(`${API_URL}/${id}`);
 export const getUserDetailByUsername = (username: string) => axios.get<UserDetail>(`${API_URL}/username/${username}`);
