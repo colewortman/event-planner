@@ -9,21 +9,6 @@ jobs:
     name: Build & Test App
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:14
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: eventp
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
       - uses: actions/checkout@v3
 
@@ -35,17 +20,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install PostgreSQL client
-        run: sudo apt-get install -y postgresql-client
-
-      - name: Build database
-        run: |
-          export PGPASSWORD=password
-          cd eventp-api
-          psql -U postgres -d eventp -h localhost -f ./resources/db-delete.sql
-          psql -U postgres -d eventp -h localhost -f ./resources/db-create.sql
-          psql -U postgres -d eventp -h localhost -f ./resources/db-insert.sql
-
       - name: Install API dependencies
         run: |
           cd eventp-api
@@ -53,3 +27,12 @@ jobs:
 
       - name: Build React app
         run: npm run build
+
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          docker-compose version
+      
+      - name: Build and run all docker containers
+        run: docker-compose up --build -d
