@@ -8,7 +8,7 @@ const eventUserRoutes = require('./routes/eventUserRoutes.js');
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:3001",
+  origin: "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
@@ -18,7 +18,7 @@ app.use('/api/events', eventRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/', eventUserRoutes)
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

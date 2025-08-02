@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: eventp
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./eventp-api/resources/db-create.sql:/docker-entrypoint-initdb.d/db-create.sql
+
+  backend:
+    build: ./eventp-api
+    environment:
+      DATABASE_URL: postgres://postgres:password@postgres:5432/eventp
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+
+  frontend:
+    build: .
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
