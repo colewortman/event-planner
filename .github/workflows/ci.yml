@@ -53,3 +53,14 @@ jobs:
 
       - name: Build React app
         run: npm run build
+      
+      - name: Build and run all docker containers
+        run: docker-compose up --build -d
+      
+      - name: Run curl tests
+        run: |
+          sleep 10 # Wait for services to start
+          curl -f http://localhost:5000/api/events || exit 1
+          curl -f http://localhost:5000/api/users || exit 1
+          curl -f http://localhost:3000 || exit 1
+        
