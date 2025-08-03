@@ -8,7 +8,16 @@ Creating and organizing events can get needlessly complicated. Mass emails that 
 
 Clone the repository: `git clone https://github.com/colewortman/event-planner`
 
+Download Docker and docker-compose if needed
+    `https://www.docker.com/`
+
 Navigate into the project directory
+
+Run: `docker-compose up --build -d` and access the site from localhost:3000
+
+You may have to change ports in the `.env` file if there are any conflicts
+
+## Start (no docker)
 
 If you do not have Node.js or React installed on your machine: 
     `https://nodejs.org/en/download`

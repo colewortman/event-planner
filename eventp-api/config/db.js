@@ -7,7 +7,7 @@ const client = new Client({
     host: "postgres",
     database: "eventp",
     password: "password",
-    port: 5432,
+    port: process.env.POSTGRES_PORT || 5432, // Use environment variable or default to 5432
     idle_timeout: 5,
 });
 

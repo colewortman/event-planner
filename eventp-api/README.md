@@ -23,7 +23,7 @@ Update the db.js config to your username and password for postgres that you set 
 
 Run the following within the eventp-api directory:
 `npm install`
-`node App.js`
+`npm start`
 
 You may have to install additional packages:
 `npm install express`
