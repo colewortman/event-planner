@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
@@ -8,7 +9,7 @@ const eventUserRoutes = require('./routes/eventUserRoutes.js');
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "http://localhost:" + (process.env.FRONTEND_PORT || 3000), // Allow requests from the frontend
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
